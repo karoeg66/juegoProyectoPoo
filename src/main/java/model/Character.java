@@ -120,7 +120,7 @@ public abstract class Character extends Entity {
      * Ejecuta el ataque principal de la entidad.
      * Debe ser implementado por las subclases.
      */
-    public abstract void attack();
+    public abstract void ataque();
 
     /**
      * Aplica daño a la entidad.
@@ -128,7 +128,7 @@ public abstract class Character extends Entity {
      *
      * @param damage cantidad de daño recibido.
      */
-    public abstract void takeDamage(int damage);
+    public abstract void recibirdano(int damage);
 
     /**
      * Actualiza el frame de la animación según el tiempo configurado.
