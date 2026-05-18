@@ -22,3 +22,17 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# === CONFIGURACIONES DE IDE (AGREGADO) ===
+# Ignorar carpeta de configuración de IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Ignorar carpeta de configuración de NetBeans (por si acaso)
+nbproject/
+build/
+nbdist/
+
+# Ignorar carpeta de configuración de VS Code
+.vscode/
