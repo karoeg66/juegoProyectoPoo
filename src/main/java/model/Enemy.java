@@ -3,6 +3,7 @@ package model;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
+import java.util.HashMap;
 
 public abstract class Enemy extends Character{
     /**

@@ -12,12 +12,12 @@ public class PantallaInstrucciones {
      */
     public void draw(Graphics g, int w, int h) {
 
-        // Fondo
+
         g.setColor(new Color(10, 20, 60));
 
         g.fillRect(0, 0, w, h);
 
-        // Titulo
+
         g.setColor(new Color(255, 200, 0));
 
         g.setFont(new Font("Impact", Font.BOLD, 36));
@@ -26,7 +26,7 @@ public class PantallaInstrucciones {
                 w / 2 - 130,
                 60);
 
-        // Texto principal
+
         g.setColor(Color.WHITE);
 
         g.setFont(new Font("Arial", Font.PLAIN, 16));
