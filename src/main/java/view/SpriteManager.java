@@ -68,146 +68,8 @@ public class SpriteManager {
 
     /**
      * Precarga todos los sprites e ítems del juego.
-     * <p>
-     * =====================================================================
-     * PERSONAJES JUGABLES
-     * =====================================================================
-     * <p>
-     * LUFFY
-     * ---------------------------------------------------------------------
-     * Caminar derecha:
-     * resources/sprites/Luffy/CaminarDerecha/LUCD1.png ... LUCD8.png
-     * <p>
-     * Caminar izquierda:
-     * resources/sprites/Luffy/CaminarIzquierda/LUCI1.png ... LUCI8.png
-     * <p>
-     * Quieto:
-     * resources/sprites/Luffy/De Pie/LUS1.png ... LUS4.png
-     * <p>
-     * Reacción:
-     * resources/sprites/Luffy/Reacción/LUR1.png ... LUR7.png
-     * <p>
-     * Ataque:
-     * resources/sprites/Luffy/Ataque/LUA1.png ... LUA7.png
-     * <p>
-     * Especial:
-     * resources/sprites/Luffy/Especial/LUE1.png ... LUE5.png
-     * <p>
-     * Muerte:
-     * resources/sprites/Luffy/Muerte/LUD1.png ... LUD9.png
-     * <p>
-     * ZORO
-     * ---------------------------------------------------------------------
-     * Caminar derecha:
-     * resources/sprites/Zoro/CaminarDerecha/ZOCD1.png ... ZOCD8.png
-     * <p>
-     * Caminar izquierda:
-     * resources/sprites/Zoro/CaminarIzquierda/ZOCI1.png ... ZOCI8.png
-     * <p>
-     * Quieto:
-     * resources/sprites/Zoro/De Pie/ZOS1.png ... ZOS4.png
-     * <p>
-     * Reacción:
-     * resources/sprites/Zoro/Reacción/ZOR1.png ... ZOR10.png
-     * <p>
-     * Ataque:
-     * resources/sprites/Zoro/Ataque/ZOA1.png ... ZOA10.png
-     * <p>
-     * Especial:
-     * resources/sprites/Zoro/Especial/ZOE1.png ... ZOE11.png
-     * <p>
-     * Muerte:
-     * resources/sprites/Zoro/Muerte/ZOD1.png ... ZOD7.png
-     * <p>
-     * SANJI
-     * ---------------------------------------------------------------------
-     * Caminar derecha:
-     * resources/sprites/Sanji/CaminarDerecha/SACD1.png ... SACD8.png
-     * <p>
-     * Caminar izquierda:
-     * resources/sprites/Sanji/CaminarIzquierda/SACI1.png ... SACI8.png
-     * <p>
-     * Quieto:
-     * resources/sprites/Sanji/De Pie/SAS1.png ... SAS4.png
-     * <p>
-     * Reacción:
-     * resources/sprites/Sanji/Reacción/SAR1.png ... SAR4.png
-     * <p>
-     * Ataque:
-     * resources/sprites/Sanji/Ataque/SAA1.png ... SAA10.png
-     * <p>
-     * Especial:
-     * resources/sprites/Sanji/Especial/SAE1.png ... SAE11.png
-     * <p>
-     * Muerte:
-     * resources/sprites/Sanji/Muerte/SAD1.png ... SAD6.png
-     * <p>
-     * =====================================================================
-     * ENEMIGOS
-     * =====================================================================
-     * <p>
-     * PIRATA 1
-     * resources/sprites/Pirata 1/CaminarDerecha/P1CD1.png ... P1CD6.png
-     * resources/sprites/Pirata 1/CaminarIzquierda/P1CI1.png ... P1CI6.png
-     * resources/sprites/Pirata 1/Atacar/P1A1.png ... P1A5.png
-     * resources/sprites/Pirata 1/Muerte/P1M1.png ... P1M3.png
-     * <p>
-     * PIRATA 2
-     * resources/sprites/Pirata 2/CaminarDerecha/P2CD1.png ... P2CD6.png
-     * resources/sprites/Pirata 2/CaminarIzquierda/P2CI1.png ... P2CI6.png
-     * resources/sprites/Pirata 2/Atacar/P2A1.png ... P2A3.png
-     * resources/sprites/Pirata 2/Muerte/P2M1.png ... P2M3.png
-     * <p>
-     * PIRATA 3
-     * resources/sprites/Pirata 3/CaminarDerecha/P3CD1.png ... P3CD2.png
-     * resources/sprites/Pirata 3/CaminarIzquierda/P3CI1.png ... P3CI2.png
-     * resources/sprites/Pirata 3/Atacar/P3A1.png ... P3A4.png
-     * resources/sprites/Pirata 3/Muerte/P3M1.png ... P3M4.png
-     * <p>
-     * MARINO 1
-     * resources/sprites/Marino 1/CaminarDerecha/M1CD1.png ... M1CD5.png
-     * resources/sprites/Marino 1/CaminarIzquierda/M1CI1.png ... M1CI5.png
-     * resources/sprites/Marino 1/Atacar/M1A1.png ... M1A4.png
-     * resources/sprites/Marino 1/Muerte/M1M1.png ... M1M3.png
-     * <p>
-     * MARINO 2
-     * resources/sprites/Marino 2/CaminarDerecha/M2CD1.png ... M2CD6.png
-     * resources/sprites/Marino 2/CaminarIzquierda/M2CI1.png ... M2CI6.png
-     * resources/sprites/Marino 2/Atacar/M2A1.png ... M2A2.png
-     * resources/sprites/Marino 2/Muerte/M2M1.png ... M2M3.png
-     * <p>
-     * =====================================================================
-     * JEFES
-     * =====================================================================
-     * <p>
-     * ARLONG
-     * resources/sprites/Arlong/CaminarDerecha/ARCD1.png ... ARCD2.png
-     * resources/sprites/Arlong/CaminarIzquierda/ARCI1.png ... ARCI2.png
-     * resources/sprites/Arlong/Reacción/ARR1.png ... ARR4.png
-     * resources/sprites/Arlong/Ataque1/ARA1-1.png ... ARA1-4.png
-     * resources/sprites/Arlong/Ataque2/ARA2-1.png ... ARA2-5.png
-     * resources/sprites/Arlong/Ataque3/ARA3-1.png ... ARA3-18.png
-     * resources/sprites/Arlong/Muerte/ARM1.png ... ARM4.png
-     * <p>
-     * CROCODILE
-     * resources/sprites/Crocodile/Reacción/CRR1.png ... CRR8.png
-     * resources/sprites/Crocodile/Ataque 1/CRA1-1.png ... CRA1-15.png
-     * resources/sprites/Crocodile/Ataque 2/CRA2-1.png ... CRA2-19.png
-     * resources/sprites/Crocodile/Ataque 3/CRA3-1.png ... CRA3-18.png
-     * resources/sprites/Crocodile/Muerte/CRD1.png ... CRD12.png
-     * <p>
-     * =====================================================================
-     * ÍTEMS
-     * =====================================================================
-     * Carne:
-     * resources/sprites/Carne y Comida/Carne.png
-     * <p>
-     * Especial:
-     * resources/sprites/Carne y Comida/Comida.png
-     * <p>
-     * Bala:
-     * resources/BAM4.png
-     */
+    */
+
     private void precargar() {
         // LUFFY
 
@@ -804,7 +666,12 @@ public class SpriteManager {
                 "resources/sprites/Crocodile/Muerte/CRD10.png",
                 "resources/sprites/Crocodile/Muerte/CRD11.png",
                 "resources/sprites/Crocodile/Muerte/CRD12.png"
+
+
         ));
+
+        cargarItem("carne", "resources/sprites/Carne y Comida/Carne.png");
+        cargarItem("especial", "resources/sprites/Carne y Comida/Comida.png");
 
         System.out.println("[SpriteManager] Directorio actual: " + new File(".").getAbsolutePath());
 

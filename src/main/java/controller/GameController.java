@@ -240,6 +240,13 @@ public class GameController {
             nivelActual = 1;
             cambiarEstado(EstadoJuego.NIVEL1);
         }
+        Carne carne = new Carne(500, 350);
+        carne.setSprite(spriteManager.getItemCarne());
+        objetos.add(carne);
+
+        Especial especial = new Especial(500, 350);
+        especial.setSprite(spriteManager.getItemEspecial());
+        objetos.add(especial);
     }
 
     /**

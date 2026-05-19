@@ -16,6 +16,8 @@ public class Carne extends GameObject {
      */
     private final int cantidadVida;
 
+    private final String SPRITE = "Carne.png";
+
     /**
      * Crea una nueva carne en la posición indicada.
      *
