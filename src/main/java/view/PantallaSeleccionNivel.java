@@ -67,7 +67,7 @@ public class PantallaSeleccionNivel {
                 (w - fm.stringWidth(desc)) / 2,
                 h / 4 + 52);
 
-        
+
         int btnW = 230;
         int btnH = 75;
         int gap = 60;
