@@ -2,33 +2,97 @@ package model;
 
 import model.enums.DireccionVisual;
 
+/**
+ * Representa al jefe final Arlong.
+ * <p>
+ * Este enemigo hereda de {@link Boss} y posee un sistema de fases que modifica
+ * el daño de sus ataques. Además, controla animaciones de ataque, caminata,
+ * reacción e inactividad.
+ */
 public class Arlong extends Boss {
 
+    /**
+     * Vida máxima del jefe.
+     */
     private static final int VIDA_MAX = 500;
+
+    /**
+     * Tiempo mínimo entre ataques consecutivos en milisegundos.
+     */
     private static final long COOLDOWN_ATAQUE = 2500;
+
+    /**
+     * Duración de la animación de ataque en milisegundos.
+     */
     private static final long DURACION_ATAQUE = 600;
+
+    /**
+     * Duración del estado de inactividad después de atacar en milisegundos.
+     */
     private static final long DURACION_IDLE = 800;
-    // Intervalo mínimo entre repeticiones de la animación "reaccion" del jefe
-    private static final long INTERVALO_REACCION = 12000; // 12 s
+
+    /**
+     * Intervalo mínimo entre repeticiones de la animación de reacción.
+     */
+    private static final long INTERVALO_REACCION = 12000;
+
+    /**
+     * Velocidad con la que Arlong persigue al jugador.
+     */
     private static final int VEL_PERSEGUIR = 2;
+
+    /**
+     * Momento en que se realizó el último ataque.
+     */
     private long tiempoUltimoAtaque;
+
+    /**
+     * Indica si Arlong se encuentra ejecutando la animación de ataque.
+     */
     private boolean enAnimacionAtaque = false;
+
+    /**
+     * Indica si Arlong se encuentra en estado de inactividad.
+     */
     private boolean enAnimacionIdle = false;
+
+    /**
+     * Momento en que comenzó la animación de ataque.
+     */
     private long tiempoInicioAnimAtaque = 0;
+
+    /**
+     * Momento en que comenzó el estado de inactividad.
+     */
     private long tiempoInicioIdle = 0;
+
+    /**
+     * Momento en que se reprodujo por última vez la animación de reacción.
+     */
     private long tiempoUltimaReaccion = 0;
 
+    /**
+     * Crea una nueva instancia del jefe Arlong.
+     *
+     * @param x posición inicial en el eje X.
+     * @param y posición inicial en el eje Y.
+     */
     public Arlong(int x, int y) {
         super(x, y, 80, 80, VIDA_MAX, VEL_PERSEGUIR, 330, 165, 80);
         this.tiempoUltimoAtaque = 0;
         this.dirVisual = DireccionVisual.IZQUIERDA;
-        // Número de frames del sprite de muerte de Arlong (ajustar al real)
         this.totalFramesMuerte = 8;
     }
 
+    /**
+     * Actualiza el estado general del jefe.
+     * <p>
+     * Si Arlong ha muerto, únicamente actualiza la animación de muerte.
+     * En caso contrario, actualiza la animación actual, la fase de animación
+     * y la fase del combate.
+     */
     @Override
     public void update() {
-        // Si ya murió solo actualizar animación (para reproducir el sprite de muerte completo)
         if (estadoAnimacion.equals("morir")) {
             actualizarAnimacion();
             return;
@@ -38,6 +102,10 @@ public class Arlong extends Boss {
         cambiarFase();
     }
 
+    /**
+     * Controla las transiciones entre las animaciones de ataque,
+     * inactividad y caminata.
+     */
     private void actualizarFaseAnimacion() {
         long ahora = System.currentTimeMillis();
 
@@ -46,8 +114,7 @@ public class Arlong extends Boss {
                 enAnimacionAtaque = false;
                 enAnimacionIdle = true;
                 tiempoInicioIdle = ahora;
-                // "reaccion" = reacción post-ataque del jefe (ciclo, pero no seguido)
-                // Solo activar si ha pasado suficiente tiempo desde la última
+
                 if (ahora - tiempoUltimaReaccion >= INTERVALO_REACCION) {
                     setEstadoAnimacion("reaccion");
                     tiempoUltimaReaccion = ahora;
@@ -69,11 +136,17 @@ public class Arlong extends Boss {
         setEstadoAnimacion("caminar");
     }
 
+    /**
+     * Hace que Arlong persiga al jugador ajustando su dirección y posición.
+     *
+     * @param p jugador al que debe perseguir.
+     */
     public void perseguirJugador(Player p) {
         if (estadoAnimacion.equals("morir")) return;
         if (enAnimacionAtaque || enAnimacionIdle) return;
 
         int dx = 0, dy = 0;
+
         if (p.getX() < x) {
             dx = -1;
             dirVisual = DireccionVisual.IZQUIERDA;
@@ -81,28 +154,40 @@ public class Arlong extends Boss {
             dx = 1;
             dirVisual = DireccionVisual.DERECHA;
         }
-        if (p.getY() < y) dy = -1;
-        else if (p.getY() > y) dy = 1;
+
+        if (p.getY() < y) {
+            dy = -1;
+        } else if (p.getY() > y) {
+            dy = 1;
+        }
+
         mover(dx, dy);
     }
 
+    /**
+     * Inicia el ataque de Arlong si el tiempo de recarga ha terminado.
+     * La animación utilizada depende de la fase actual del jefe.
+     */
     @Override
     public void atacar() {
         long ahora = System.currentTimeMillis();
+
         if (!enAnimacionAtaque && !enAnimacionIdle &&
                 ahora - tiempoUltimoAtaque >= COOLDOWN_ATAQUE) {
+
             tiempoUltimoAtaque = ahora;
             tiempoInicioAnimAtaque = ahora;
             enAnimacionAtaque = true;
-            // Usar ataque de la fase actual: "atacar1", "atacar2" o "atacar3"
-            // Sprites:
-            //   Fase 1 → sprites/arlong/arlongataque1.png  (una vez)
-            //   Fase 2 → sprites/arlong/arlongataque2.png  (una vez)
-            //   Fase 3 → sprites/arlong/arlongataque3.png  (una vez)
+
             setEstadoAnimacion(claveAtaqueFase());
         }
     }
 
+    /**
+     * Retorna el daño del ataque según la fase actual del jefe.
+     *
+     * @return daño infligido por Arlong.
+     */
     public int getDanoAtaque() {
         return switch (fase) {
             case 1 -> 6;
@@ -112,23 +197,41 @@ public class Arlong extends Boss {
         };
     }
 
+    /**
+     * Indica si Arlong está listo para atacar.
+     *
+     * @return {@code true} si puede atacar, {@code false} en caso contrario.
+     */
     public boolean puedeAtacar() {
         return !estadoAnimacion.equals("morir") &&
-                !enAnimacionAtaque && !enAnimacionIdle &&
+                !enAnimacionAtaque &&
+                !enAnimacionIdle &&
                 System.currentTimeMillis() - tiempoUltimoAtaque >= COOLDOWN_ATAQUE;
     }
 
+    /**
+     * Indica si actualmente se está reproduciendo la animación de ataque.
+     *
+     * @return {@code true} si Arlong está atacando.
+     */
     public boolean estaAtacando() {
         return enAnimacionAtaque;
     }
 
+    /**
+     * Define el patrón de ataque del jefe.
+     * Actualmente no posee una implementación específica.
+     */
     @Override
     public void patronAtaque() {
     }
 
+    /**
+     * Activa la animación de reacción si ha transcurrido
+     * el tiempo mínimo desde la última vez.
+     */
     @Override
     public void animacionIdle() {
-        // Reacción del jefe: se repite pero no seguido
         long ahora = System.currentTimeMillis();
         if (ahora - tiempoUltimaReaccion >= INTERVALO_REACCION) {
             setEstadoAnimacion("reaccion");
@@ -136,11 +239,21 @@ public class Arlong extends Boss {
         }
     }
 
+    /**
+     * Retorna la vida máxima de Arlong.
+     *
+     * @return vida máxima del jefe.
+     */
     @Override
     public int getVidaMaximo() {
         return VIDA_MAX;
     }
 
+    /**
+     * Retorna el nombre del jefe.
+     *
+     * @return cadena con el nombre "Arlong".
+     */
     @Override
     public String getNombre() {
         return "Arlong";
