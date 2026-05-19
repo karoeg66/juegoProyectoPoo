@@ -1,14 +1,6 @@
 package controller;
 
-import model.Boss;
-import model.Crocodile;
-import model.Enemy;
-import model.GameObject;
-import model.Luffy;
-import model.Player;
-import model.Projectile;
-import model.Sanji;
-import model.Zoro;
+import model.*;
 import model.enums.EstadoJuego;
 import model.enums.TipoEnemigo;
 import model.enums.TipoPersonaje;
@@ -30,149 +22,156 @@ import java.util.Random;
 public class GameController {
 
     /**
-     * Intervalo de tiempo entre la aparición de objetos, en milisegundos.
+     * Intervalo de tiempo para generar objetos
      */
     private static final long INTERVALO_ITEM = 8000;
 
     /**
-     * Intervalo mínimo entre sonidos aleatorios, en milisegundos.
+     * Intervalo de tiempo para reproducir sonidos aleatorios
      */
     private static final long INTERVALO_SONIDO_ALEATORIO = 7000;
 
     /**
-     * Lista de enemigos activos.
+     * Lista de enemigos activos
      */
     private final List<Enemy> enemigos;
 
     /**
-     * Lista de objetos recolectables activos.
+     * Lista de objetos del juego
      */
     private final List<GameObject> objetos;
 
     /**
-     * Lista de proyectiles activos.
+     * Lista de proyectiles activos
      */
     private final List<Projectile> proyectiles;
 
     /**
-     * Intervalo entre generaciones de enemigos.
+     * Tiempo entre aparicion de enemigos
      */
     private final long spawnIntervalo;
 
     /**
-     * Número máximo de enemigos simultáneos.
+     * Cantidad maxima de enemigos permitidos
      */
     private final int maxEnemigos = 7;
 
     /**
-     * Administrador de colisiones.
+     * Administrador de colisiones
      */
     private final CollisionManager collisionManager;
 
     /**
-     * Controlador de entrada del usuario.
+     * Controlador de entradas del teclado
      */
     private final InputController inputController;
 
     /**
-     * Administrador de sonidos.
+     * Administrador de sonidos
      */
     private final SoundManager soundManager;
 
     /**
-     * Administrador de sprites.
+     * Administrador de sprites
      */
     private final SpriteManager spriteManager;
 
     /**
-     * Generador de números aleatorios.
+     * Generador de numeros aleatorios
      */
     private final Random random;
 
     /**
-     * Ancho del mapa.
+     * Ancho del mapa
      */
     private final int mapWidth;
 
     /**
-     * Alto del mapa.
+     * Alto del mapa
      */
     private final int mapHeight;
 
     /**
-     * Indica si ya se reprodujo el sonido de reacción.
+     * Indica si un sonido de reaccion esta reproduciendose
      */
-    private final boolean reaccionSonando = false;
+    private boolean reaccionSonando = false;
+
     /**
-     * Tiempo del último spawn de enemigos.
-     */
-    private final long tiempoUltimoSpawnEnemigo;
-    /**
-     * Estado actual del juego.
+     * Estado actual del juego
      */
     private EstadoJuego estado;
+
     /**
-     * Jugador actual.
+     * Jugador principal
      */
     private Player player;
+
     /**
-     * Jefe actual del nivel.
+     * Jefe actual del nivel
      */
     private Boss jefe;
+
     /**
-     * Tiempo de inicio del nivel.
+     * Tiempo de inicio del nivel
      */
     private long tiempoInicioNivel;
+
     /**
-     * Tiempo transcurrido desde el inicio del nivel.
+     * Tiempo transcurrido desde el inicio
      */
     private long tiempoTranscurrido;
+
     /**
-     * Puntaje acumulado del jugador.
+     * Tiempo del ultimo spawn de enemigo
+     */
+    private long tiempoUltimoSpawnEnemigo;
+
+    /**
+     * Puntaje actual del jugador
      */
     private int puntaje;
 
     /**
-     * Nivel actual.
+     * Nivel actual
      */
     private int nivelActual;
 
     /**
-     * Personaje seleccionado por el usuario.
+     * Personaje seleccionado por el jugador
      */
     private TipoPersonaje personajeSeleccionado;
 
     /**
-     * Tiempo del último spawn de objetos.
+     * Tiempo del ultimo spawn de objeto
      */
     private long tiempoUltimoSpawnItem;
 
     /**
-     * Tiempo del último sonido aleatorio.
+     * Tiempo del ultimo sonido aleatorio
      */
     private long tiempoUltimoSonidoAleatorio;
 
     /**
-     * Indica si el jugador está en animación de muerte.
+     * Indica si el jugador esta en animacion de muerte
      */
     private boolean jugadorEnMuerte = false;
 
     /**
-     * Indica si el jefe está en animación de muerte.
+     * Indica si el jefe esta en animacion de muerte
      */
     private boolean jefeEnMuerte = false;
 
     /**
-     * Construye el controlador principal del juego.
-     *
-     * @param mapWidth        ancho del mapa.
-     * @param mapHeight       alto del mapa.
-     * @param inputController controlador de entrada.
-     * @param soundManager    administrador de sonidos.
+     * Constructor principal del controlador del juego
+     * @param mapWidth ancho del mapa
+     * @param mapHeight alto del mapa
+     * @param inputController controlador de entradas
+     * @param soundManager administrador de sonidos
      */
     public GameController(int mapWidth, int mapHeight,
                           InputController inputController,
                           SoundManager soundManager) {
+
         this.mapWidth = mapWidth;
         this.mapHeight = mapHeight;
         this.inputController = inputController;
@@ -190,9 +189,8 @@ public class GameController {
     }
 
     /**
-     * Guarda el personaje seleccionado y cambia al estado de selección de nivel.
-     *
-     * @param tipoPersonaje personaje elegido.
+     * Guarda el personaje seleccionado
+     * @param tipoPersonaje personaje elegido
      */
     public void seleccionarPersonaje(TipoPersonaje tipoPersonaje) {
         this.personajeSeleccionado = tipoPersonaje;
@@ -200,21 +198,20 @@ public class GameController {
     }
 
     /**
-     * Inicia el juego desde el nivel 1.
-     *
-     * @param tipoPersonaje personaje con el que se jugará.
+     * Inicia el juego en el nivel 1
+     * @param tipoPersonaje personaje seleccionado
      */
     public void iniciarJuego(TipoPersonaje tipoPersonaje) {
         iniciarJuegoEnNivel(tipoPersonaje, 1);
     }
 
     /**
-     * Inicializa el juego en el nivel indicado.
-     *
-     * @param tipoPersonaje personaje seleccionado.
-     * @param nivel         nivel en el que se iniciará la partida.
+     * Inicia el juego en un nivel especifico
+     * @param tipoPersonaje personaje seleccionado
+     * @param nivel nivel a iniciar
      */
     public void iniciarJuegoEnNivel(TipoPersonaje tipoPersonaje, int nivel) {
+        // Crear jugador y cargarle sus sprites
         player = switch (tipoPersonaje) {
             case LUFFY -> new Luffy(mapWidth / 2, mapHeight / 2, mapWidth, mapHeight);
             case ZORO -> new Zoro(mapWidth / 2, mapHeight / 2, mapWidth, mapHeight);
@@ -246,9 +243,8 @@ public class GameController {
     }
 
     /**
-     * Carga los sprites correspondientes al personaje seleccionado.
-     *
-     * @param tipo tipo de personaje.
+     * Carga los sprites del jugador segun su tipo
+     * @param tipo tipo de personaje
      */
     private void cargarSpritesJugador(TipoPersonaje tipo) {
         switch (tipo) {
@@ -259,50 +255,192 @@ public class GameController {
     }
 
     /**
-     * Devuelve el personaje seleccionado.
-     *
-     * @return tipo de personaje seleccionado.
+     * Obtiene el personaje seleccionado
+     * @return personaje seleccionado
      */
     public TipoPersonaje getPersonajeSeleccionado() {
         return personajeSeleccionado;
     }
 
     /**
-     * Actualiza toda la lógica del juego en cada ciclo principal.
+     * Actualiza toda la logica principal del juego
      */
     public void actualizar() {
-        // Método original conservado en tu archivo.
+        if (inputController.quierePausar()) {
+            inputController.limpiarEdges();
+            if (estado == EstadoJuego.PAUSA) {
+                cambiarEstado(nivelActual == 1 ? EstadoJuego.NIVEL1 : EstadoJuego.NIVEL2);
+            } else if (estado == EstadoJuego.NIVEL1 || estado == EstadoJuego.NIVEL2) {
+                cambiarEstado(EstadoJuego.PAUSA);
+            }
+            return;
+        }
+
+        if (estado == EstadoJuego.PAUSA || estado == EstadoJuego.MENU) return;
+        if (estado == EstadoJuego.VICTORIA || estado == EstadoJuego.DERROTA) return;
+
+        tiempoTranscurrido = System.currentTimeMillis() - tiempoInicioNivel;
+
+        if (jugadorEnMuerte) {
+            player.update();
+            if (player.isAnimacionMuerteTerminada()) {
+                soundManager.reproducirSonido("resources/audio/Otros/derrota.wav");
+                cambiarEstado(EstadoJuego.DERROTA);
+            }
+            if (player.getEstadoAnimacion().equals("reaccion") && !reaccionSonando) {
+                reaccionSonando = true;
+                String ruta = audiosRandomJugador().get(0);
+                System.out.println("Intentando reproducir reaccion: " + ruta);
+                soundManager.reproducirSonido(ruta);
+            }
+            return;
+        }
+
+        if (jefeEnMuerte && jefe != null) {
+            jefe.update();
+            if (jefe.isAnimacionMuerteTerminada()) {
+                puntaje += 100;
+                soundManager.reproducirSonido("resources/audio/Otros/victoria.wav");
+                if (nivelActual == 2) {
+                    cambiarEstado(EstadoJuego.VICTORIA);
+                } else {
+                    cambiarEstado(EstadoJuego.MENU);
+                }
+                jefe = null;
+                jefeEnMuerte = false;
+            }
+            player.update();
+            actualizarEnemigos();
+            return;
+        }
+
+        inputController.procesarInput(player);
+        if (player.consumirEspecialActivado()) {
+            reproducirSonidoEspecialJugador();
+        }
+        player.update();
+        actualizarEnemigos();
+        actualizarProyectiles();
+        actualizarObjetos();
+        spawnEnemigos();
+        spawnObjetos();
+
+        collisionManager.verificarColisionesEnemigos(player, enemigos, this);
+        collisionManager.verificarColisionesProyectiles(player, proyectiles, this);
+        collisionManager.verificarColisionesObjetos(player, objetos, inputController.quiereRecoger());
+
+        if (jefe instanceof Arlong arlong) {
+            arlong.update();
+            arlong.perseguirJugador(player);
+            if (arlong.puedeAtacar()) {
+                arlong.ataque();
+                soundManager.reproducirSonido("resources/audio/Arlong/arlongataque.wav");
+            }
+            collisionManager.verificarColisionArlong(player, arlong, this);
+        } else if (jefe instanceof Crocodile croc) {
+            croc.update();
+            if (croc.puedeAtacar()) {
+                croc.ataque();
+                soundManager.reproducirSonido("resources/audio/Crocodile/crocodileataque.wav");
+            }
+            collisionManager.verificarColisionCrocodile(player, croc, this);
+        }
+
+        verificarAudioReaccionJefe();
+        verificarSonidoAleatorio();
+        limpiarMuertos();
+        verificarFinDelJuego();
+        controlarTiempo();
+        inputController.limpiarEdges();
     }
 
     /**
-     * Actualiza todos los enemigos activos.
+     * Actualiza enemigos y ataques
      */
     private void actualizarEnemigos() {
+        for (Enemy e : enemigos) {
+            e.update();
+            if (e.isEsDistancia() && e.puedeAtacar()) {
+                e.ataque();
+                soundManager.reproducirSonido(audioAtaqueEnemigo(e));
+                Projectile bala = new Projectile(
+                        e.getX() + e.getWidth() / 2,
+                        e.getY() + e.getHeight() / 2,
+                        player.getX() + player.getWidth() / 2,
+                        player.getY() + player.getHeight() / 2,
+                        6, e.getDano(), false
+                );
+                if (spriteManager.getItemBala() != null)
+                    bala.setSprite(spriteManager.getItemBala());
+                proyectiles.add(bala);
+            } else if (!e.isEsDistancia()) {
+                e.perseguirJugador(player);
+            }
+        }
     }
 
     /**
-     * Actualiza todos los proyectiles activos.
+     * Actualiza proyectiles activos
      */
     private void actualizarProyectiles() {
+        java.util.Iterator<Projectile> it = proyectiles.iterator();
+        while (it.hasNext()) {
+            Projectile p = it.next();
+            p.mover();
+            if (p.haExpirado()) it.remove();
+        }
     }
 
     /**
-     * Elimina los objetos cuyo tiempo de vida haya expirado.
+     * Actualiza objetos activos
      */
     private void actualizarObjetos() {
+        objetos.removeIf(GameObject::haExpirado);
     }
 
     /**
-     * Genera enemigos según las condiciones del juego.
+     * Genera enemigos en el mapa
      */
     public void spawnEnemigos() {
+        if (estado != EstadoJuego.NIVEL1) return;
+        if (enemigos.size() >= maxEnemigos) return;
+        if (tiempoTranscurrido >= 180000 && jefe != null) return;
+
+        long ahora = System.currentTimeMillis();
+        if (ahora - tiempoUltimoSpawnEnemigo >= spawnIntervalo) {
+            tiempoUltimoSpawnEnemigo = ahora;
+            int borde = random.nextInt(4);
+            int ex, ey;
+            switch (borde) {
+                case 0 -> {
+                    ex = random.nextInt(mapWidth);
+                    ey = 0;
+                }
+                case 1 -> {
+                    ex = random.nextInt(mapWidth);
+                    ey = mapHeight - 48;
+                }
+                case 2 -> {
+                    ex = 0;
+                    ey = random.nextInt(mapHeight);
+                }
+                default -> {
+                    ex = mapWidth - 48;
+                    ey = random.nextInt(mapHeight);
+                }
+            }
+            TipoEnemigo tipo = EnemyFactory.tipoAleatorio();
+            Enemy e = EnemyFactory.crearEnemigo(tipo, ex, ey);
+            // Cargar sprites al enemigo según su tipo
+            e.cargarSprites(spriteManager.getSpritesEnemigo(prefijoPorTipo(tipo)));
+            enemigos.add(e);
+        }
     }
 
     /**
-     * Devuelve el prefijo de carpeta para cargar los sprites del enemigo.
-     *
-     * @param tipo tipo de enemigo.
-     * @return nombre del prefijo correspondiente.
+     * Obtiene el prefijo de sprites segun el tipo de enemigo
+     * @param tipo tipo de enemigo
+     * @return prefijo de sprites
      */
     private String prefijoPorTipo(TipoEnemigo tipo) {
         return switch (tipo) {
@@ -316,221 +454,321 @@ public class GameController {
     }
 
     /**
-     * Genera objetos recolectables en el mapa.
+     * Genera objetos aleatorios en el mapa
      */
     public void spawnObjetos() {
+        long ahora = System.currentTimeMillis();
+        if (ahora - tiempoUltimoSpawnItem >= INTERVALO_ITEM) {
+            tiempoUltimoSpawnItem = ahora;
+            int ox = 50 + random.nextInt(mapWidth - 100);
+            int oy = 50 + random.nextInt(mapHeight - 100);
+            if (!player.tieneEspecial() && random.nextInt(10) < 3) {
+                Especial esp = new Especial(ox, oy);
+                if (spriteManager.getItemEspecial() != null)
+                    esp.setSprite(spriteManager.getItemEspecial());
+                objetos.add(esp);
+            } else {
+                Carne carne = new Carne(ox, oy);
+                if (spriteManager.getItemCarne() != null)
+                    carne.setSprite(spriteManager.getItemCarne());
+                objetos.add(carne);
+            }
+        }
     }
 
     /**
-     * Aplica daño directo al jugador.
-     *
-     * @param dano cantidad de daño a aplicar.
+     * Aplica daño al jugador
+     * @param dano cantidad de daño
      */
     public void aplicarDanoGlobal(int dano) {
         player.recibirDano(dano);
     }
 
     /**
-     * Elimina enemigos muertos y actualiza el puntaje.
+     * Elimina enemigos muertos
      */
     private void limpiarMuertos() {
+        java.util.Iterator<Enemy> it = enemigos.iterator();
+        while (it.hasNext()) {
+            Enemy e = it.next();
+            if (!e.estaVivo() && e.isAnimacionMuerteTerminada()) {
+                puntaje += 10;
+                soundManager.reproducirSonido(audioMuerteEnemigo(e));
+                it.remove();
+            }
+        }
     }
 
     /**
-     * Verifica si el jugador o el jefe han muerto.
+     * Verifica si el juego termino
      */
     public void verificarFinDelJuego() {
+
+        if (!player.estaVivo() && !jugadorEnMuerte) {
+            jugadorEnMuerte = true;
+            soundManager.reproducirSonido(audioMuerteJugador());
+            return;
+        }
+
+        if (jefe != null && !jefe.estaVivo() && !jefeEnMuerte) {
+            jefeEnMuerte = true;
+            soundManager.reproducirSonido(audioMuerteJefe());
+        }
     }
 
     /**
-     * Controla eventos temporizados del nivel, como la aparición del jefe.
+     * Controla eventos basados en el tiempo
      */
     public void controlarTiempo() {
+        if (estado == EstadoJuego.NIVEL1) {
+            if (tiempoTranscurrido >= 180000 && jefe == null) {
+                enemigos.clear();
+                jefe = new Arlong(mapWidth / 2, 50);
+                jefe.cargarSprites(spriteManager.getSpritesBoss("arlong"));
+                jefeEnMuerte = false;
+                soundManager.reproducirSonido("resources/audio/Arlong/arlongllegada.wav");
+            }
+        }
     }
 
     /**
-     * Reproduce sonidos aleatorios del jugador o del jefe.
+     * Reproduce sonidos aleatorios
      */
     private void verificarSonidoAleatorio() {
+        long ahora = System.currentTimeMillis();
+        if (ahora - tiempoUltimoSonidoAleatorio < INTERVALO_SONIDO_ALEATORIO) return;
+        tiempoUltimoSonidoAleatorio = ahora;
+
+        if (soundManager.hayAudioActivo()) return;
+
+        if (jefe != null && jefe.estaVivo()) {
+            soundManager.reproducirSonidoAleatorio(audiosRandomJefe(), 0);
+            return;
+        }
+
+        soundManager.reproducirSonidoAleatorio(audiosRandomJugador(), 0);
     }
 
     /**
-     * Reproduce el sonido de reacción del jefe cuando corresponde.
+     * Verifica sonido de reaccion del jefe
      */
     private void verificarAudioReaccionJefe() {
+        if (jefe == null || !jefe.estaVivo()) return;
+        if (!jefe.getEstadoAnimacion().equals("reaccion")) return;
+        if (soundManager.hayAudioActivo()) return;
+
+        if (jefe instanceof Arlong) {
+            soundManager.reproducirSonido("resources/audio/Arlong/arlongreaccion.wav");
+        } else if (jefe instanceof Crocodile) {
+            soundManager.reproducirSonido("resources/audio/Crocodile/crocodilereaccion.wav");
+        }
     }
 
     /**
-     * Devuelve la ruta del audio de ataque del jugador.
-     *
-     * @return ruta del archivo de audio.
+     * Obtiene audio de ataque del jugador
+     * @return ruta del audio
      */
     public String audioAtaqueJugador() {
-        return "";
+        if (player == null) return "";
+        return switch (player.getTipo()) {
+            case LUFFY -> "resources/audio/Luffy/luffyataque.wav";
+            case ZORO -> "resources/audio/Zoro/zoroataque.wav";
+            case SANJI -> "resources/audio/Sanji/sanjiataque.wav";
+        };
     }
 
     /**
-     * Devuelve la ruta del audio del ataque especial del jugador.
-     *
-     * @return ruta del archivo de audio.
+     * Obtiene audio especial del jugador
+     * @return ruta del audio
      */
     public String audioEspecialJugador() {
-        return "";
+        if (player == null) return "";
+        return switch (player.getTipo()) {
+            case LUFFY -> "resources/audio/Luffy/luffyespecial.wav";
+            case ZORO -> "resources/audio/Zoro/zoroespecial.wav";
+            case SANJI -> "resources/audio/Sanji/sanjiespecial.wav";
+        };
     }
 
     /**
-     * Devuelve la ruta del audio de muerte del jugador.
-     *
-     * @return ruta del archivo de audio.
+     * Obtiene audio de muerte del jugador
+     * @return ruta del audio
      */
     private String audioMuerteJugador() {
-        return "";
+        if (player == null) return "resources/audio/Otros/derrota.wav";
+        return switch (player.getTipo()) {
+            case LUFFY -> "resources/audio/Luffy/luffymuerte.wav";
+            case ZORO -> "resources/audio/Zoro/zoromuerte.wav";
+            case SANJI -> "resources/audio/Sanji/sanjimuerte.wav";
+        };
     }
 
     /**
-     * Devuelve la ruta del audio de muerte del jefe.
-     *
-     * @return ruta del archivo de audio.
+     * Obtiene audio de muerte del jefe
+     * @return ruta del audio
      */
     private String audioMuerteJefe() {
-        return "";
+        if (jefe instanceof Arlong) return "resources/audio/Arlong/arlongderrota.wav";
+        if (jefe instanceof Crocodile) return "resources/audio/Crocodile/crocodilederrota.wav";
+        return "resources/audio/Otros/victoria.wav";
     }
 
     /**
-     * Devuelve la ruta del audio de ataque del enemigo.
-     *
-     * @param e enemigo.
-     * @return ruta del archivo de audio.
+     * Obtiene audio de ataque de enemigo
+     * @param e enemigo
+     * @return ruta del audio
      */
     private String audioAtaqueEnemigo(Enemy e) {
-        return "";
+        return switch (e.getTipo()) {
+            case PIRATA1 -> "resources/audio/Enemigos/enemigomuerte1.wav";
+            case PIRATA2 -> "resources/audio/Enemigos/enemigomuerte2.wav";
+            case PIRATA3 -> "resources/audio/Enemigos/enemigomuerte3.wav";
+            case MARINE1 -> "resources/audio/Enemigos/enemigomuerte1.wav";
+            case MARINE2 -> "resources/audio/Enemigos/enemigomuerte2.wav";
+            default -> "";
+        };
     }
 
     /**
-     * Devuelve la ruta del audio de muerte del enemigo.
-     *
-     * @param e enemigo.
-     * @return ruta del archivo de audio.
+     * Obtiene audio de muerte de enemigo
+     * @param e enemigo
+     * @return ruta del audio
      */
     private String audioMuerteEnemigo(Enemy e) {
         return "";
     }
 
     /**
-     * Devuelve la lista de audios aleatorios del jugador.
-     *
-     * @return lista de rutas de audio.
+     * Obtiene lista de audios aleatorios del jugador
+     * @return lista de audios
      */
     private List<String> audiosRandomJugador() {
-        return List.of();
+        if (player == null) return List.of();
+        return switch (player.getTipo()) {
+            case LUFFY -> List.of(
+                    "resources/audio/Luffy/luffyrandom1.wav",
+                    "resources/audio/Luffy/luffyrandom2.wav",
+                    "resources/audio/Luffy/luffyrandom3.wav"
+            );
+            case ZORO -> List.of(
+                    "resources/audio/Zoro/zororandom1.wav",
+                    "resources/audio/Zoro/zororandom2.wav",
+                    "resources/audio/Zoro/zororandom3.wav"
+            );
+            case SANJI -> List.of(
+                    "resources/audio/Sanji/sanjireaction1.wav",
+                    "resources/audio/Sanji/sanjireaction2.wav",
+                    "resources/audio/Sanji/sanjireaction3.wav"
+            );
+        };
     }
 
     /**
-     * Devuelve la lista de audios aleatorios del jefe.
-     *
-     * @return lista de rutas de audio.
+     * Obtiene lista de audios aleatorios del jefe
+     * @return lista de audios
      */
     private List<String> audiosRandomJefe() {
+        if (jefe instanceof Arlong) return List.of(
+                "resources/audio/Arlong/arlongreaccion.wav",
+                "resources/audio/Arlong/arlongreaccion.wav"
+        );
+        if (jefe instanceof Crocodile) return List.of(
+                "resources/audio/Crocodile/crocodilereaccion.wav",
+                "resources/audio/Crocodile/crocodilereaccion.wav"
+        );
         return List.of();
     }
 
     /**
-     * Reproduce el sonido de ataque del jugador.
+     * Reproduce sonido de ataque del jugador
      */
     public void reproducirSonidoAtaqueJugador() {
         soundManager.reproducirSonido(audioAtaqueJugador());
     }
 
     /**
-     * Reproduce el sonido del ataque especial del jugador.
+     * Reproduce sonido especial del jugador
      */
     public void reproducirSonidoEspecialJugador() {
         soundManager.reproducirSonido(audioEspecialJugador());
     }
 
     /**
-     * Reproduce el sonido de ataque correspondiente.
-     *
-     * @param quien entidad que realiza el ataque.
+     * Reproduce sonidos de ataque
+     * @param quien entidad que ataca
      */
     public void reproducirSonidoAtaque(String quien) {
+        switch (quien) {
+            case "jugador" -> reproducirSonidoAtaqueJugador();
+            case "enemigo", "boss" -> {
+            }
+        }
     }
 
     /**
-     * Dibuja todas las entidades del juego.
-     *
-     * @param g contexto gráfico.
+     * Renderiza todos los elementos del juego
+     * @param g objeto graphics
      */
     public void renderizar(Graphics g) {
+        if (player != null) player.draw(g);
+        for (Enemy e : enemigos) e.draw(g);
+        for (GameObject obj : objetos) obj.draw(g);
+        for (Projectile p : proyectiles) p.draw(g);
+        if (jefe != null) jefe.draw(g);
     }
 
     /**
-     * Inicializa el segundo nivel del juego.
+     * Inicia el nivel 2
      */
     public void iniciarNivel2() {
+        enemigos.clear();
+        objetos.clear();
+        proyectiles.clear();
+        jefe = new Crocodile(mapWidth, mapHeight);
+        jefe.cargarSprites(spriteManager.getSpritesBoss("crocodile"));
+        jefeEnMuerte = false;
+        nivelActual = 2;
+        tiempoInicioNivel = System.currentTimeMillis();
+        cambiarEstado(EstadoJuego.NIVEL2);
+        soundManager.reproducirSonido("resources/audio/Crocodile/crocodileentrada.wav");
     }
 
     /**
-     * Cambia el estado actual del juego.
-     *
-     * @param nuevoEstado nuevo estado.
+     * Cambia el estado actual del juego
+     * @param nuevoEstado nuevo estado
      */
     public void cambiarEstado(EstadoJuego nuevoEstado) {
         this.estado = nuevoEstado;
     }
-
-    /**
-     * @return estado actual del juego.
-     */
+    // Getters
     public EstadoJuego getEstado() {
         return estado;
     }
 
-    /**
-     * @return jugador actual.
-     */
     public Player getPlayer() {
         return player;
     }
 
-    /**
-     * @return lista de enemigos activos.
-     */
     public List<Enemy> getEnemigos() {
         return enemigos;
     }
 
-    /**
-     * @return jefe actual.
-     */
     public Boss getJefe() {
         return jefe;
     }
 
-    /**
-     * @return lista de objetos activos.
-     */
     public List<GameObject> getObjetos() {
         return objetos;
     }
 
-    /**
-     * @return tiempo transcurrido del nivel.
-     */
     public long getTiempoTranscurrido() {
         return tiempoTranscurrido;
     }
 
-    /**
-     * @return puntaje actual.
-     */
     public int getPuntaje() {
         return puntaje;
     }
 
-    /**
-     * @return nivel actual.
-     */
     public int getNivelActual() {
         return nivelActual;
     }
