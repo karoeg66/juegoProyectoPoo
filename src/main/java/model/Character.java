@@ -1,5 +1,8 @@
 package model;
 
+import model.enums.Direccion;
+import model.enums.DireccionVisual;
+
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ public abstract class Character extends Entity {
     /**
      * Atributo variable que controla la direccion del personaje
      */
-    protected Direcccion direccion;
+    protected Direccion direccion;
     /**
      * Atributo variable que controla la direccion visual del personaje
      */
@@ -91,28 +94,28 @@ public abstract class Character extends Entity {
 
         // Actualizar dirección lógica
         if (dx > 0 && dy == 0) {
-            direccion = Direcccion.DERECHA;
+            direccion = Direccion.DERECHA;
 
         } else if (dx < 0 && dy == 0) {
-            direccion = Direcccion.IZQUIERDA;
+            direccion = Direccion.IZQUIERDA;
 
         } else if (dx == 0 && dy < 0) {
-            direccion = Direcccion.ARRIBA;
+            direccion = Direccion.ARRIBA;
 
         } else if (dx == 0 && dy > 0) {
-            direccion = Direcccion.ABAJO;
+            direccion = Direccion.ABAJO;
 
         } else if (dx > 0 && dy < 0) {
-            direccion = Direcccion.ARRIBA_DER;
+            direccion = Direccion.ARRIBA_DER;
 
         } else if (dx < 0 && dy < 0) {
-            direccion = Direcccion.ARRIBA_IZQ;
+            direccion = Direccion.ARRIBA_IZQ;
 
         } else if (dx > 0 && dy > 0) {
-            direccion = Direcccion.ABAJO_DER;
+            direccion = Direccion.ABAJO_DER;
 
         } else if (dx < 0 && dy > 0) {
-            direccion = Direcccion.ABAJO_IZQ;
+            direccion = Direccion.ABAJO_IZQ;
         }
     }
 
@@ -202,7 +205,7 @@ public abstract class Character extends Entity {
                 || estado.equals("reaccion");
     }
 
-   // Getters y Setters
+    // Getters y Setters
 
 
     /**
