@@ -2,6 +2,7 @@ package model;
 
 import java.awt.image.BufferedImage;
 import java.awt.*;
+import java.util.HashMap;
 
 
 public abstract class Player extends Character {

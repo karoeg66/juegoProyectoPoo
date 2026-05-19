@@ -1,5 +1,7 @@
 package controller;
 
+import view.GameFrame;
+
 import javax.swing.*;
 
 /**

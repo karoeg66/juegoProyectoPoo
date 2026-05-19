@@ -91,7 +91,7 @@ public class Arlong extends Boss {
      * En caso contrario, actualiza la animación actual, la fase de animación
      * y la fase del combate.
      */
-    @Override
+
     public void update() {
         if (estadoAnimacion.equals("morir")) {
             actualizarAnimacion();
@@ -164,24 +164,7 @@ public class Arlong extends Boss {
         mover(dx, dy);
     }
 
-    /**
-     * Inicia el ataque de Arlong si el tiempo de recarga ha terminado.
-     * La animación utilizada depende de la fase actual del jefe.
-     */
-    @Override
-    public void atacar() {
-        long ahora = System.currentTimeMillis();
 
-        if (!enAnimacionAtaque && !enAnimacionIdle &&
-                ahora - tiempoUltimoAtaque >= COOLDOWN_ATAQUE) {
-
-            tiempoUltimoAtaque = ahora;
-            tiempoInicioAnimAtaque = ahora;
-            enAnimacionAtaque = true;
-
-            setEstadoAnimacion(claveAtaqueFase());
-        }
-    }
 
     /**
      * Retorna el daño del ataque según la fase actual del jefe.
@@ -257,5 +240,33 @@ public class Arlong extends Boss {
     @Override
     public String getNombre() {
         return "Arlong";
+    }
+
+    /**
+     * Inicia el ataque de Arlong si el tiempo de recarga ha terminado.
+     * La animación utilizada depende de la fase actual del jefe.
+     */
+
+
+    @Override
+    public void ataque() {
+
+        long ahora = System.currentTimeMillis();
+
+        if (!enAnimacionAtaque && !enAnimacionIdle &&
+                ahora - tiempoUltimoAtaque >= COOLDOWN_ATAQUE) {
+
+            tiempoUltimoAtaque = ahora;
+            tiempoInicioAnimAtaque = ahora;
+            enAnimacionAtaque = true;
+
+            setEstadoAnimacion(claveAtaqueFase());
+        }
+
+    }
+
+    @Override
+    public void recibirdano(int damage) {
+
     }
 }
