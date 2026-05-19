@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.TipoEnemigo;
+
 /**
  * Representa el enemigo básico Marino 1.
  * <p>

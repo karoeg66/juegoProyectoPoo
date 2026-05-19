@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.TipoEnemigo;
+
 /**
  * Representa al enemigo Pirata 1.
  * <p>

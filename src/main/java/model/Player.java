@@ -1,8 +1,11 @@
 package model;
 
+import model.enums.TipoPersonaje;
+
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public abstract class Player extends Character {

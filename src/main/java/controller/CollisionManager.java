@@ -58,7 +58,7 @@ public class CollisionManager {
             // Enemigo golpea al jugador (cuerpo a cuerpo)
             if (!e.isEsDistancia() && hayColision(player, e)) {
                 if (e.puedeAtacar()) {
-                    e.atacar();
+                    e.ataque();
                     player.recibirDanoEspada(e.getDano());
                     gc.reproducirSonidoAtaque("enemigo");
                 }
@@ -68,7 +68,7 @@ public class CollisionManager {
             if (estadoActual.equals("atacar") && !yaCausoDanoNormal) {
                 Rectangle rangoAtaque = getRangoAtaque(player);
                 if (colisionRect(rangoAtaque, e.getBounds())) {
-                    e.recibirDano(player.getDanoBasico());
+                    e.recibirdano(player.getDanoBasico());
                     gc.reproducirSonidoAtaque("jugador");
                     yaCausoDanoNormal = true;
                 }
@@ -77,7 +77,7 @@ public class CollisionManager {
             // Especial — daña a todos en el área, marcado después del loop
             if (estadoActual.equals("especial") && !yaCausoDanoEspecial) {
                 if (colisionRect(rangoEspecial, e.getBounds())) {
-                    e.recibirDano(player.getDanoEspecial());
+                    e.recibirdano(player.getDanoEspecial());
                     gc.reproducirSonidoAtaque("jugador");
                 }
             }

@@ -57,4 +57,14 @@ public class Sanji extends Player {
     protected Color getColorPlaceholder() {
         return Color.YELLOW;
     }
+
+    @Override
+    public void ataque() {
+
+    }
+
+    @Override
+    public void recibirdano(int damage) {
+
+    }
 }

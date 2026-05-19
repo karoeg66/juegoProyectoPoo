@@ -56,4 +56,14 @@ public class Zoro extends Player {
     protected Color getColorPlaceholder() {
         return Color.GREEN;
     }
+
+    @Override
+    public void ataque() {
+
+    }
+
+    @Override
+    public void recibirdano(int damage) {
+
+    }
 }
