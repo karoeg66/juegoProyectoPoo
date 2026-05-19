@@ -1,5 +1,8 @@
 package model;
 
+import model.enums.DireccionVisual;
+import model.enums.TipoEnemigo;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
@@ -130,8 +133,7 @@ public abstract class Enemy extends Character{
      * Ejecuta el ataque del enemigo
      */
     @Override
-    public void atacar() {
-
+    public void ataque() {
         ultimoAtaque = System.currentTimeMillis();
         setEstadoAnimacion("atacar");
     }
@@ -141,8 +143,9 @@ public abstract class Enemy extends Character{
      *
      * @param dano cantidad de dano recibido
      */
+
     @Override
-    public void recibirDano(int dano) {
+    public void recibirdano(int dano) {
 
         vida = Math.max(0, vida - dano);
 
@@ -150,6 +153,7 @@ public abstract class Enemy extends Character{
             setEstadoAnimacion("morir");
         }
     }
+
 
     /**
      * Dibuja el enemigo y su barra de vida

@@ -252,13 +252,6 @@ public class Crocodile extends Boss {
         return distX < 120 && distY < 120;
     }
 
-    /**
-     * Ejecuta el ataque principal del jefe.
-     */
-    @Override
-    public void atacar() {
-        atacarArea();
-    }
 
     /**
      * Modifica el patrón de ataque según la fase actual.
@@ -307,4 +300,20 @@ public class Crocodile extends Boss {
     public String getNombre() {
         return "Crocodile";
     }
+
+    /**
+     * Ejecuta el ataque principal del jefe.
+     */
+
+
+    @Override
+    public void ataque() {
+        atacarArea();
+    }
+
+    @Override
+    public void recibirdano(int damage) {
+
+    }
+
 }

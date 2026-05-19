@@ -1,13 +1,12 @@
 package controller;
 
-import model.Enemy;
-import model.Entity;
-import model.GameObject;
-import model.Player;
+import model.*;
 
 import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
+
+import static model.enums.TipoPersonaje.*;
 
 public class CollisionManager {
 

@@ -32,23 +32,23 @@ public class HUD {
         g.setColor(Color.DARK_GRAY);
         g.fillRect(barX, barY, barW, barH);
 
-        // Vida actual
+
         float porcentaje = (float) player.getVida() / player.getVidaMax();
         Color colorVida = porcentaje > 0.5f ? Color.GREEN :
                 porcentaje > 0.25f ? Color.YELLOW : Color.RED;
         g.setColor(colorVida);
         g.fillRect(barX, barY, (int) (barW * porcentaje), barH);
 
-        // Borde
+
         g.setColor(Color.WHITE);
         g.drawRect(barX, barY, barW, barH);
 
-        // Texto
+
         g.setFont(new Font("Arial", Font.BOLD, 13));
         g.drawString("HP: " + player.getVida() + "/" + player.getVidaMax(),
                 barX + 5, barY + 15);
 
-        // Nombre del personaje
+
         g.setFont(new Font("Arial", Font.BOLD, 14));
         g.drawString(player.getTipo().name(), barX, barY - 4);
     }
@@ -75,14 +75,13 @@ public class HUD {
     }
 
     public void mostrarPuntaje(Graphics g) {
-        // El puntaje se pasa desde GamePanel vía controller
-        // Se dibuja en la esquina superior derecha (complementa el timer)
+
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 14));
         // El texto lo dibuja GamePanel junto al timer
     }
 
-    // Sobrecarga con puntaje explícito
+
     public void mostrarPuntaje(Graphics g, int puntaje) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 14));

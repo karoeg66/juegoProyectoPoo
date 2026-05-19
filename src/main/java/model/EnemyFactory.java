@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.TipoEnemigo;
+
 /**
  * Fábrica de enemigos normales del juego.
  * <p>

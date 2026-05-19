@@ -54,4 +54,14 @@ public class Luffy extends Player {
     protected Color getColorPlaceholder() {
         return Color.RED;
     }
+
+    @Override
+    public void ataque() {
+
+    }
+
+    @Override
+    public void recibirdano(int damage) {
+
+    }
 }
