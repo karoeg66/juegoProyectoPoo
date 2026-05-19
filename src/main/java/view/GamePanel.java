@@ -2,6 +2,7 @@ package view;
 
 import controller.GameController;
 import controller.InputController;
+import controller.SoundManager;
 import model.enums.EstadoJuego;
 import model.enums.TipoPersonaje;
 
