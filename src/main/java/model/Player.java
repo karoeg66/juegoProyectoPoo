@@ -296,7 +296,6 @@ public abstract class Player extends Character {
      *
      * @param dano dano recibido
      */
-    @Override
     public void recibirDano(int dano) {
 
         vida = Math.max(0, vida - dano);
