@@ -145,7 +145,7 @@ public abstract class Enemy extends Character{
      */
 
     @Override
-    public void recibirdano(int dano) {
+    public void recibirDano(int dano) {
 
         vida = Math.max(0, vida - dano);
 

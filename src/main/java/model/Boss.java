@@ -134,8 +134,9 @@ public abstract class Boss extends Character {
      *
      * @param dano cantidad de dano recibido
      */
-    public void recibirDano(int dano) {
 
+    @Override
+    public void recibirDano(int dano) {
         vida = Math.max(0, vida - dano);
 
         cambiarFase();

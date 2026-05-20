@@ -15,9 +15,9 @@ public class Zoro extends Player {
     /**
      * Crea una nueva instancia de Zoro.
      *
-     * @param x posición inicial en el eje X.
-     * @param y posición inicial en el eje Y.
-     * @param mapWidth ancho total del mapa.
+     * @param x         posición inicial en el eje X.
+     * @param y         posición inicial en el eje Y.
+     * @param mapWidth  ancho total del mapa.
      * @param mapHeight altura total del mapa.
      */
     public Zoro(int x, int y, int mapWidth, int mapHeight) {
@@ -59,11 +59,6 @@ public class Zoro extends Player {
 
     @Override
     public void ataque() {
-
-    }
-
-    @Override
-    public void recibirdano(int damage) {
 
     }
 }

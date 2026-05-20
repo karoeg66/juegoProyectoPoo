@@ -311,9 +311,5 @@ public class Crocodile extends Boss {
         atacarArea();
     }
 
-    @Override
-    public void recibirdano(int damage) {
-
-    }
 
 }

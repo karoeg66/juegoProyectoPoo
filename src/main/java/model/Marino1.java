@@ -73,4 +73,5 @@ class Marino1 extends Enemy {
     public int getVidaMaximo() {
         return VIDA_MAX;
     }
+
 }

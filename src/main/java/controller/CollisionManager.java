@@ -68,7 +68,7 @@ public class CollisionManager {
             if (estadoActual.equals("atacar") && !yaCausoDanoNormal) {
                 Rectangle rangoAtaque = getRangoAtaque(player);
                 if (colisionRect(rangoAtaque, e.getBounds())) {
-                    e.recibirdano(player.getDanoBasico());
+                    e.recibirDano(player.getDanoBasico());
                     gc.reproducirSonidoAtaque("jugador");
                     yaCausoDanoNormal = true;
                 }
@@ -77,7 +77,7 @@ public class CollisionManager {
             // Especial — daña a todos en el área, marcado después del loop
             if (estadoActual.equals("especial") && !yaCausoDanoEspecial) {
                 if (colisionRect(rangoEspecial, e.getBounds())) {
-                    e.recibirdano(player.getDanoEspecial());
+                    e.recibirDano(player.getDanoEspecial());
                     gc.reproducirSonidoAtaque("jugador");
                 }
             }
@@ -112,8 +112,7 @@ public class CollisionManager {
         if (arlong == null || !arlong.estaVivo()) return;
 
         String estadoActual = player.getEstadoAnimacion();
-        // Nota: actualizarEstadoJugador ya fue llamado en verificarColisionesEnemigos;
-        // si se llama sin enemigos, resetear aquí también.
+        // actualizarEstadoJugador ya fue llamado en verificarColisionesEnemigos, si se llama sin enemigos, resetear aquí tambien
         actualizarEstadoJugador(estadoActual);
 
         // Arlong golpea al jugador solo durante su animación de ataque activa

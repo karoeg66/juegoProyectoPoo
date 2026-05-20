@@ -131,7 +131,7 @@ public abstract class Character extends Entity {
      *
      * @param damage cantidad de daño recibido.
      */
-    public abstract void recibirdano(int damage);
+    public abstract void recibirDano(int damage);
 
     /**
      * Actualiza el frame de la animación según el tiempo configurado.

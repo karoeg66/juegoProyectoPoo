@@ -173,10 +173,10 @@ public class Arlong extends Boss {
      */
     public int getDanoAtaque() {
         return switch (fase) {
-            case 1 -> 6;
-            case 2 -> 9;
-            case 3 -> 13;
-            default -> 6;
+            case 1 -> 2;
+            case 2 -> 4;
+            case 3 -> 8;
+            default -> 2;
         };
     }
 
@@ -262,11 +262,6 @@ public class Arlong extends Boss {
 
             setEstadoAnimacion(claveAtaqueFase());
         }
-
-    }
-
-    @Override
-    public void recibirdano(int damage) {
 
     }
 }

@@ -59,9 +59,4 @@ public class Luffy extends Player {
     public void ataque() {
 
     }
-
-    @Override
-    public void recibirdano(int damage) {
-
-    }
 }
