@@ -196,6 +196,7 @@ public class GameController {
     public void seleccionarPersonaje(TipoPersonaje tipoPersonaje) {
         this.personajeSeleccionado = tipoPersonaje;
         cambiarEstado(EstadoJuego.INGRESAR_NOMBRE);
+        inputController.iniciarCapturaNombre();
     }
 
     /**
@@ -309,17 +310,15 @@ public class GameController {
 
         if (jefeEnMuerte && jefe != null) {
             jefe.update();
+
             if (jefe.isAnimacionMuerteTerminada()) {
-                puntaje += 100;
                 soundManager.reproducirSonido("resources/audio/Otros/victoria.wav");
-                if (nivelActual == 2) {
-                    cambiarEstado(EstadoJuego.VICTORIA);
-                } else {
-                    cambiarEstado(EstadoJuego.MENU);
-                }
+                cambiarEstado(EstadoJuego.VICTORIA);
                 jefe = null;
                 jefeEnMuerte = false;
+                return;
             }
+
             player.update();
             actualizarEnemigos();
             return;
@@ -539,6 +538,8 @@ public class GameController {
         if (jefe != null && !jefe.estaVivo() && !jefeEnMuerte) {
             jefeEnMuerte = true;
             soundManager.reproducirSonido(audioMuerteJefe());
+            puntaje += 100;
+            cambiarEstado(EstadoJuego.VICTORIA);
         }
     }
 

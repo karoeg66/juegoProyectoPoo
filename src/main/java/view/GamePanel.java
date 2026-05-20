@@ -87,13 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                     case INGRESAR_NOMBRE -> {
                         if (pantallaNombre.btnContinuar.contains(mx, my)) {
-                            String nombre = inputController.getTextoNombre().trim();
-
-                            if (!nombre.isEmpty()) {
-                                controller.setNombreJugador(nombre);
-                                controller.cambiarEstado(EstadoJuego.SELECCION_NIVEL);
-                                inputController.limpiarConfirmarNombre();
-                            }
+                            confirmarNombre();
                         }
                     }
                     case SELECCION_NIVEL -> {
@@ -169,13 +163,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             case INGRESAR_NOMBRE -> {
                 if (inputController.quiereConfirmarNombre()) {
-                    String nombre = inputController.getTextoNombre().trim();
-
-                    if (!nombre.isEmpty()) {
-                        controller.setNombreJugador(nombre);
-                        controller.cambiarEstado(EstadoJuego.SELECCION_NIVEL);
-                        inputController.limpiarConfirmarNombre();
-                    }
+                    confirmarNombre();
                 }
             }
             case CARGANDO -> {
@@ -186,6 +174,7 @@ public class GamePanel extends JPanel implements Runnable {
                     pantallaDerrota = new PantallaDerrota();
                     volverAlMenu();
                 }
+
             }
         }
     }
@@ -222,7 +211,7 @@ public class GamePanel extends JPanel implements Runnable {
                 dibujarTiempo(g);
             }
             case PAUSA -> dibujarPausa(g);
-            case VICTORIA -> pantallaVictoria.mostrarVictoria(g);
+            case VICTORIA -> pantallaVictoria.mostrarVictoria(g, controller.getPuntaje(), inputController.getTextoNombre());
             case DERROTA -> pantallaDerrota.mostrarDerrota(g, controller.getTiempoTranscurrido());
         }
 
@@ -267,6 +256,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void seleccionarPersonaje(TipoPersonaje tipo) {
         controller.seleccionarPersonaje(tipo);
+        inputController.iniciarCapturaNombre();
     }
 
     public void iniciarJuego(TipoPersonaje tipo, int nivel) {
@@ -286,5 +276,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     public GameController getController() {
         return controller;
+    }
+
+    private void confirmarNombre() {
+        String nombre = inputController.getTextoNombre().trim();
+
+        if (!nombre.isEmpty()) {
+            controller.setNombreJugador(nombre);
+            inputController.detenerCapturaNombre();
+            controller.cambiarEstado(EstadoJuego.SELECCION_NIVEL);
+        }
     }
 }

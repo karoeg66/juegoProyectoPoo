@@ -10,6 +10,11 @@ import java.util.Set;
 public class InputController implements KeyListener {
 
     /**
+     * Boleano para saber si se esta capturando el nombre
+     */
+    private boolean capturandoNombre = false;
+
+    /**
      * Tecla para atacar
      */
     public static final int TECLA_ATACAR = KeyEvent.VK_J;
@@ -111,6 +116,10 @@ public class InputController implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        if (!capturandoNombre) {
+            return;
+        }
+
         char c = e.getKeyChar();
 
         if (c == '\b') {
@@ -280,6 +289,17 @@ public class InputController implements KeyListener {
 
     public void limpiarTextoNombre() {
         textoNombre = "";
+        confirmarNombre = false;
+    }
+
+    public void iniciarCapturaNombre() {
+        capturandoNombre = true;
+        textoNombre = "";
+        confirmarNombre = false;
+    }
+
+    public void detenerCapturaNombre() {
+        capturandoNombre = false;
         confirmarNombre = false;
     }
 
