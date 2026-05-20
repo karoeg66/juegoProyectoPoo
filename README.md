@@ -1,6 +1,6 @@
 # juegoProyectoPoo
 Juego creado para proyecto, usando POO, con ayuda de sprites y graphics
-ONE PIECE SURVIVOR
+ENEMIES IN SIGHT
 
 Juego 2D desarrollado en Java inspirado en el universo de One Piece donde el jugador debe sobrevivir a oleadas de enemigos y derrotar poderosos jefes usando habilidades especiales y diferentes personajes.
 
