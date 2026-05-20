@@ -59,6 +59,9 @@ public class InputController implements KeyListener {
      */
     private final Set<Integer> teclasRecienPresionadas;
 
+    private String textoNombre = "";
+    private boolean confirmarNombre = false;
+
     /**
      * Constructor del controlador de entrada
      */
@@ -108,7 +111,25 @@ public class InputController implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        char c = e.getKeyChar();
 
+        if (c == '\b') {
+            if (!textoNombre.isEmpty()) {
+                textoNombre = textoNombre.substring(0, textoNombre.length() - 1);
+            }
+            return;
+        }
+
+        if (c == '\n') {
+            confirmarNombre = true;
+            return;
+        }
+
+        if (Character.isLetterOrDigit(c) || c == ' ') {
+            if (textoNombre.length() < 15) {
+                textoNombre += c;
+            }
+        }
     }
 
     /**
@@ -243,6 +264,23 @@ public class InputController implements KeyListener {
     public boolean quiereVolverAlMenu() {
 
         return !teclasRecienPresionadas.isEmpty();
+    }
+
+    public String getTextoNombre() {
+        return textoNombre;
+    }
+
+    public boolean quiereConfirmarNombre() {
+        return confirmarNombre;
+    }
+
+    public void limpiarConfirmarNombre() {
+        confirmarNombre = false;
+    }
+
+    public void limpiarTextoNombre() {
+        textoNombre = "";
+        confirmarNombre = false;
     }
 
 }

@@ -159,6 +159,8 @@ public class GameController {
      */
     private boolean jefeEnMuerte = false;
 
+    private String nombreJugador = "";
+
     /**
      * Constructor principal del controlador del juego
      * @param mapWidth ancho del mapa
@@ -186,13 +188,14 @@ public class GameController {
         this.tiempoUltimoSpawnEnemigo = 0;
     }
 
+
     /**
      * Guarda el personaje seleccionado
      * @param tipoPersonaje personaje elegido
      */
     public void seleccionarPersonaje(TipoPersonaje tipoPersonaje) {
         this.personajeSeleccionado = tipoPersonaje;
-        cambiarEstado(EstadoJuego.SELECCION_NIVEL);
+        cambiarEstado(EstadoJuego.INGRESAR_NOMBRE);
     }
 
     /**
@@ -795,4 +798,13 @@ public class GameController {
     public int getNivelActual() {
         return nivelActual;
     }
+
+    public String getNombreJugador() {
+        return nombreJugador;
+    }
+
+    public void setNombreJugador(String nombreJugador) {
+        this.nombreJugador = nombreJugador;
+    }
+
 }

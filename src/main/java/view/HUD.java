@@ -74,16 +74,9 @@ public class HUD {
         g.drawString("[K]", iconX + 3, iconY + 42);
     }
 
-    public void mostrarPuntaje(Graphics g) {
-
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Arial", Font.BOLD, 14));
-        // El texto lo dibuja GamePanel junto al timer
-    }
-
-
     public void mostrarPuntaje(Graphics g, int puntaje) {
-        g.setColor(Color.WHITE);
+
+        g.setColor(Color.white);
         g.setFont(new Font("Arial", Font.BOLD, 14));
         g.drawString("Pts: " + puntaje, GamePanel.WIDTH - 70, 40);
     }

@@ -7,7 +7,7 @@ import java.awt.*;
  */
 
 
-public class PantallaVictoria {
+public class  PantallaVictoria {
     /**
      * Muestra la pantalla de victoria
      *

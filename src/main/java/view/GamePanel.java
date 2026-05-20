@@ -32,12 +32,15 @@ public class GamePanel extends JPanel implements Runnable {
     private PantallaCarga pantallaCarga;
     private PantallaVictoria pantallaVictoria;
     private PantallaDerrota pantallaDerrota;
+    private PantallaNombre pantallaNombre;
 
     private Thread gameThread;
     private boolean corriendo;
 
     private Image fondoNivel1;
     private Image fondoNivel2;
+
+    private String nombreTemporal = "";
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -58,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
         pantallaSeleccionNivel = new PantallaSeleccionNivel();
         pantallaVictoria = new PantallaVictoria();
         pantallaDerrota = new PantallaDerrota();
+        pantallaNombre = new PantallaNombre();
 
         addKeyListener(inputController);
 
@@ -79,6 +83,17 @@ public class GamePanel extends JPanel implements Runnable {
                             seleccionarPersonaje(TipoPersonaje.SANJI);
                         } else if (pantallaInicio.btnInstrucciones.contains(mx, my)) {
                             mostrarInstrucciones();
+                        }
+                    }
+                    case INGRESAR_NOMBRE -> {
+                        if (pantallaNombre.btnContinuar.contains(mx, my)) {
+                            String nombre = inputController.getTextoNombre().trim();
+
+                            if (!nombre.isEmpty()) {
+                                controller.setNombreJugador(nombre);
+                                controller.cambiarEstado(EstadoJuego.SELECCION_NIVEL);
+                                inputController.limpiarConfirmarNombre();
+                            }
                         }
                     }
                     case SELECCION_NIVEL -> {
@@ -152,6 +167,17 @@ public class GamePanel extends JPanel implements Runnable {
                     volverAlMenu();
                 }
             }
+            case INGRESAR_NOMBRE -> {
+                if (inputController.quiereConfirmarNombre()) {
+                    String nombre = inputController.getTextoNombre().trim();
+
+                    if (!nombre.isEmpty()) {
+                        controller.setNombreJugador(nombre);
+                        controller.cambiarEstado(EstadoJuego.SELECCION_NIVEL);
+                        inputController.limpiarConfirmarNombre();
+                    }
+                }
+            }
             case CARGANDO -> {
                 // PantallaCarga ejecuta onCompleto en su propio hilo al terminar
             }
@@ -172,6 +198,10 @@ public class GamePanel extends JPanel implements Runnable {
         switch (estado) {
             case MENU -> pantallaInicio.draw(g, getWidth(), getHeight());
             case INSTRUCCIONES -> pantallaInstrucciones.draw(g, getWidth(), getHeight());
+
+            case INGRESAR_NOMBRE ->
+                    pantallaNombre.draw(g, getWidth(), getHeight(), inputController.getTextoNombre());
+
             case SELECCION_NIVEL -> {
                 TipoPersonaje tipo = controller.getPersonajeSeleccionado();
                 String nombre = (tipo != null) ? tipo.name() : "?";
@@ -188,7 +218,7 @@ public class GamePanel extends JPanel implements Runnable {
                 hud.dibujarBarraVidaPlayer(g);
                 hud.dibujarBossBar(g);
                 hud.mostrarInventario(g);
-                hud.mostrarPuntaje(g);
+                hud.mostrarPuntaje(g, controller.getPuntaje());
                 dibujarTiempo(g);
             }
             case PAUSA -> dibujarPausa(g);

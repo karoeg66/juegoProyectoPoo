@@ -10,5 +10,6 @@ public enum EstadoJuego {
     NIVEL2,
     PAUSA,
     VICTORIA,
-    DERROTA
+    DERROTA,
+    INGRESAR_NOMBRE
 }
