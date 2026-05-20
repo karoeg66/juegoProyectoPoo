@@ -427,7 +427,7 @@ public class GameController {
     public void spawnEnemigos() {
         if (estado != EstadoJuego.NIVEL1) return;
         if (enemigos.size() >= maxEnemigos) return;
-        if (tiempoTranscurrido >= 180000 && jefe != null) return;
+        if (tiempoTranscurrido >= 90000 && jefe != null) return;
 
         long ahora = System.currentTimeMillis();
         if (ahora - tiempoUltimoSpawnEnemigo >= spawnIntervalo) {
@@ -544,7 +544,7 @@ public class GameController {
      */
     public void controlarTiempo() {
         if (estado == EstadoJuego.NIVEL1) {
-            if (tiempoTranscurrido >= 180000 && jefe == null) {
+            if (tiempoTranscurrido >= 90000 && jefe == null) {
                 enemigos.clear();
                 jefe = new Arlong(mapWidth / 2, 50);
                 jefe.cargarSprites(spriteManager.getSpritesBoss("arlong"));
