@@ -303,4 +303,7 @@ public class InputController implements KeyListener {
         confirmarNombre = false;
     }
 
+    public void setTextoNombre(String textoNombre) {
+        this.textoNombre = textoNombre;
+    }
 }

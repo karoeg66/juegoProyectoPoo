@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Image fondoNivel1;
     private Image fondoNivel2;
 
-    private String nombreTemporal = "";
+
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));

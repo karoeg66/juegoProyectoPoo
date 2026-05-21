@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * Pantalla de inicio: dibuja el menú y expone los rectángulos de los botones
@@ -9,7 +10,7 @@ import java.awt.*;
  */
 
 
-public class PantallaInicio {
+public class PantallaInicio extends JPanel {
     /**
      * Boton de seleccion de Luffy
      */
@@ -29,6 +30,8 @@ public class PantallaInicio {
      * Boton de instrucciones
      */
     Rectangle btnInstrucciones = new Rectangle(0, 0, 1, 1);
+
+    Image logo = new ImageIcon("resources/LOGO.png").getImage().getScaledInstance(150,150,Image.SCALE_DEFAULT);
 
     /**
      * Dibuja el menu principal
@@ -127,7 +130,7 @@ public class PantallaInicio {
 
         g.setFont(new Font("Arial", Font.PLAIN, 12));
 
-        g.drawString("Mas dano",
+        g.drawString("Mas daño",
                 btnZoro.x + 22,
                 btnZoro.y + btnH + 18);
 
@@ -149,7 +152,7 @@ public class PantallaInicio {
                 btnSanji.x + 15,
                 btnSanji.y + btnH + 18);
 
-        g.drawString("Menos dano",
+        g.drawString("Menos daño",
                 btnSanji.x + 15,
                 btnSanji.y + btnH + 32);
 
@@ -181,6 +184,23 @@ public class PantallaInicio {
         g.drawString(ctrl,
                 (w - fm.stringWidth(ctrl)) / 2,
                 h - 20);
+
+        g.setColor(new Color(0, 200, 110));
+
+        g.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        g.drawString("Karolay Garcia Vasquez", 10 , 20);
+        g.drawString("Elkin Alzate Londoño", 10 , 35);
+        g.drawString("Santiago Sanchez²", 10 , 50);
+
+        g.setColor(new Color(255, 255, 255));
+
+        g.drawString("Programacion orientada a objetos", 10 , 70);
+
+
+        g.drawImage(logo, GamePanel.WIDTH - 150, 0, this );
+
+
     }
 
     /**
