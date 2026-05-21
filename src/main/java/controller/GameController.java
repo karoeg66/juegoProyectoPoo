@@ -354,21 +354,7 @@ public class GameController {
             croc.update();
             if (croc.puedeAtacar()) {
                 croc.ataque();
-                Projectile balaBoss = new Projectile(
-                        croc.getX() + croc.getWidth() / 2,
-                        croc.getY() + croc.getHeight() / 2,
-                        player.getX() + player.getWidth() / 2,
-                        player.getY() + player.getHeight() / 2,
-                        8,
-                        35,
-                        true
-                );
 
-                if (spriteManager.getItemBala() != null) {
-                    balaBoss.setSprite(spriteManager.getItemBala());
-                }
-
-                proyectiles.add(balaBoss);
                 soundManager.reproducirSonido("resources/audio/Crocodile/crocodileataque.wav");
             }
             collisionManager.verificarColisionCrocodile(player, croc, this);
