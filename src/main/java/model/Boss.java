@@ -111,6 +111,21 @@ public abstract class Boss extends Character {
 
         return "atacar" + fase;
     }
+
+    /**
+     * Ejecuta o controla la animacion de reposo del jefe.
+     * Cada jefe define su propio comportamiento cuando no esta atacando.
+     */
+
+    public abstract void animacionIdle();
+
+    /**
+     * Ejecuta el patron de ataque del jefe.
+     * Cada jefe implementa su propia forma de atacar segun sus fases o comportamiento.
+     */
+    public abstract void patronAtaque();
+
+
     /**
      * Reduce la vida del boss
      *
@@ -286,7 +301,4 @@ public abstract class Boss extends Character {
      */
     public abstract String getNombre();
 
-    public abstract void animacionIdle();
-
-    public abstract void patronAtaque();
 }
