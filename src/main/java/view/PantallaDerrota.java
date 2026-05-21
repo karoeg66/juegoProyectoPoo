@@ -46,7 +46,7 @@ public class PantallaDerrota {
         g.setFont(new Font("Impact", Font.BOLD, 70));
 
         g.drawString("DERROTA",
-                GamePanel.WIDTH / 2 - 175,
+                GamePanel.WIDTH / 2 - 140,
                 GamePanel.HEIGHT / 2 - 40);
 
         g.setColor(Color.WHITE);
@@ -81,11 +81,11 @@ public class PantallaDerrota {
                         + Math.max(0, restante)
                         + "s",
                 GamePanel.WIDTH / 2 - 90,
-                GamePanel.HEIGHT / 2 + 90
+                GamePanel.HEIGHT / 2 + 210
         );
-        int y = GamePanel.HEIGHT / 2 + 130;
+        int y = GamePanel.HEIGHT / 2 + 90;
 
-        g.drawString("TOP 3", GamePanel.WIDTH / 2 - 140, y);
+        g.drawString("TOP 3", GamePanel.WIDTH / 2 - 40, y);
         y += 30;
 
         for (int i = 0; i < top3.size(); i++) {

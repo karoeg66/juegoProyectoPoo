@@ -54,6 +54,7 @@ public class PantallaInicio extends JPanel {
 
         g.drawImage(fondo,-200, 0, this);
 
+
         // Titulo principal
         g.setColor(new Color(255, 200, 0));
 
@@ -66,6 +67,7 @@ public class PantallaInicio extends JPanel {
         g.drawString(titulo,
                 (w - fm.stringWidth(titulo)) / 2,
                 h / 4);
+
 
         // Subtitulo
         g.setColor(Color.WHITE);

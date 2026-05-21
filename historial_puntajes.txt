@@ -2,3 +2,12 @@ pepe;30
 hola;40
 pepe;20
 HOLA;40
+santi;0
+hola;0
+jo;0
+go;0
+gi;0
+hola;0
+hola;0
+jopjo;0
+ka;0
