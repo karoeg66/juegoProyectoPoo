@@ -25,7 +25,7 @@ public class PantallaNombre extends JPanel {
      * @param nombreActual El texto del nombre que el usuario va escribiendo en tiempo real
      */
 
-    
+
         public void draw(Graphics g, int w, int h, String nombreActual) {
             g.setColor(new Color(10, 20, 60));
             g.fillRect(0, 0, w, h);

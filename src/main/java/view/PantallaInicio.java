@@ -31,7 +31,12 @@ public class PantallaInicio extends JPanel {
      */
     Rectangle btnInstrucciones = new Rectangle(0, 0, 1, 1);
 
+    /**
+     * Imagen del logo de la UAM
+     */
     Image logo = new ImageIcon("resources/LOGO.png").getImage().getScaledInstance(150,150,Image.SCALE_DEFAULT);
+
+    Image fondo = new ImageIcon("resources/FONDO.png").getImage();
 
     /**
      * Dibuja el menu principal
@@ -46,6 +51,8 @@ public class PantallaInicio extends JPanel {
         g.setColor(new Color(10, 20, 60));
 
         g.fillRect(0, 0, w, h);
+
+        g.drawImage(fondo,-200, 0, this);
 
         // Titulo principal
         g.setColor(new Color(255, 200, 0));
@@ -185,7 +192,7 @@ public class PantallaInicio extends JPanel {
                 (w - fm.stringWidth(ctrl)) / 2,
                 h - 20);
 
-        g.setColor(new Color(0, 200, 110));
+        g.setColor(new Color(255, 255, 255));
 
         g.setFont(new Font("Arial", Font.PLAIN, 12));
 
@@ -198,7 +205,7 @@ public class PantallaInicio extends JPanel {
         g.drawString("Programacion orientada a objetos", 10 , 70);
 
 
-        g.drawImage(logo, GamePanel.WIDTH - 150, 0, this );
+        g.drawImage(logo, 0, 65, this );
 
 
     }

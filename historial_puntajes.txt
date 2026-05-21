@@ -1,2 +1,4 @@
 pepe;30
 hola;40
+pepe;20
+HOLA;40
