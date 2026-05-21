@@ -5,6 +5,10 @@ import java.awt.*;
 import java.util.Map;
 import java.util.HashMap;
 
+/**
+ * Clase abstracta que representa a un jefe
+ * Sirve como prueba final al finalizar un nivel
+ */
 public abstract class Boss extends Character {
     /**
      * Fase actual del boss
@@ -107,28 +111,6 @@ public abstract class Boss extends Character {
 
         return "atacar" + fase;
     }
-
-    /**
-     * Ejecuta el patron de ataque del boss
-     */
-    public abstract void patronAtaque();
-
-    /**
-     * Ejecuta la animacion idle del boss
-     */
-    public abstract void animacionIdle();
-
-    /**
-     * Verifica si el boss esta en una fase especifica
-     *
-     * @param n fase a verificar
-     * @return true si esta en esa fase
-     */
-    public boolean estaEnFase(int n) {
-
-        return fase == n;
-    }
-
     /**
      * Reduce la vida del boss
      *
@@ -152,6 +134,7 @@ public abstract class Boss extends Character {
      *
      * @param g objeto Graphics usado para dibujar
      */
+    @Override
     public void draw(Graphics g) {
 
         // Determina la clave de animacion
@@ -302,14 +285,4 @@ public abstract class Boss extends Character {
      * @return nombre del boss
      */
     public abstract String getNombre();
-
-    /**
-     * Obtiene la fase actual del boss
-     *
-     * @return fase actual
-     */
-    public int getFase() {
-
-        return fase;
-    }
 }
