@@ -1,5 +1,6 @@
 package view;
 import java.awt.*;
+import java.util.List;
 
 
 /**
@@ -27,7 +28,7 @@ public class PantallaDerrota {
      * @param tiempoJugado tiempo total jugado
      */
     public void mostrarDerrota(Graphics g,
-                               long tiempoJugado, int puntaje) {
+                               long tiempoJugado, int puntaje, List<String> top3) {
 
         if (tiempoBloqueo == 0) {
             tiempoBloqueo = System.currentTimeMillis();
@@ -82,6 +83,22 @@ public class PantallaDerrota {
                 GamePanel.WIDTH / 2 - 90,
                 GamePanel.HEIGHT / 2 + 90
         );
+        int y = GamePanel.HEIGHT / 2 + 130;
+
+        g.drawString("TOP 3", GamePanel.WIDTH / 2 - 140, y);
+        y += 30;
+
+        for (int i = 0; i < top3.size(); i++) {
+            String[] partes = top3.get(i).split(";");
+
+            g.drawString(
+                    (i + 1) + ". " + partes[0] + " - " + partes[1],
+                    GamePanel.WIDTH / 2 - 110,
+                    y
+            );
+
+            y += 30;
+        }
     }
 
     /**

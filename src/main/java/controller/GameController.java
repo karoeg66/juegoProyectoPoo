@@ -531,6 +531,7 @@ public class GameController {
 
         if (!player.estaVivo() && !jugadorEnMuerte) {
             jugadorEnMuerte = true;
+            Historial.guardar(nombreJugador, puntaje);
             soundManager.reproducirSonido(audioMuerteJugador());
             return;
         }
