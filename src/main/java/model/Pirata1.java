@@ -21,9 +21,6 @@ import model.enums.TipoEnemigo;
  * <p>
  * Hereda de la clase {@code Enemy}, la cual proporciona toda la lógica
  * general de movimiento, combate, animación y detección de colisiones.
- *
- * @author Sebastian
- * @version 1.0
  */
 class Pirata1 extends Enemy {
 

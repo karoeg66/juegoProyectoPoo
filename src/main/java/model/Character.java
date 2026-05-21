@@ -183,16 +183,6 @@ public abstract class Character extends Entity {
     }
 
     /**
-     * Reproduce un sonido aleatorio asociado a la entidad
-     * La implementación se realiza en las subclases
-     * mediante SoundManager.
-     */
-    public void reproducirSonidoAleatorio() {
-
-        // Implementado mediante SoundManager
-    }
-
-    /**
      * Determina si una animación debe repetirse en ciclo
      *
      * @param estado estado de animación.
