@@ -45,7 +45,7 @@ public class FileManager {
      * * @param file El archivo en el cual se va a escribir
      * @param lista La lista de cadenas con las lineas a escribir
      */
-    
+
 
     public static void escribirFile(File file, List<String> lista) {
         try {

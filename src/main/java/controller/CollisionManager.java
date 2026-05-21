@@ -7,6 +7,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import static model.enums.TipoPersonaje.*;
+/**
+ * Clase encargada de gestionar y verificar todas las colisiones del juego.
+ * Controla los impactos entre el jugador, enemigos comunes, jefes, proyectiles y objetos,
+ * manejando ademas el control de tiempos de daño para evitar impactos duplicados.
+ */
 
 public class CollisionManager {
 
@@ -21,17 +26,32 @@ public class CollisionManager {
     private boolean yaCausoDanoCrocodile = false;
     private boolean crocoAtacandoAnterior = false;
 
+    /**
+     * Verifica si dos entidades del juego estan colisionando basandose en sus limites.
+     * @param a Primera entidad
+     * @param b Segunda entidad
+     * @return true si las entidades se superponen
+     */
+
     public boolean hayColision(Entity a, Entity b) {
         return a.getBounds().intersects(b.getBounds());
     }
+
+    /**
+     * Verifica si dos rectangulos se superponen en el espacio.
+     * @param a Primer rectangulo
+     * @param b Segundo rectangulo
+     * @return true si los rectangulos se intersectan
+     */
 
     public boolean colisionRect(Rectangle a, Rectangle b) {
         return a.intersects(b);
     }
 
     /**
-     * Resetea todas las flags de "ya causé daño este swing" cuando el estado del
-     * jugador cambia (nuevo ataque). Se llama primero en cada verificación.
+     * Resetea todas las flags de "ya cause daño este swing" cuando el estado del
+     * jugador cambia (nuevo ataque). Se llama primero en cada verificacion.
+     * @param estadoActual El estado de animacion actual del jugador
      */
     private void actualizarEstadoJugador(String estadoActual) {
         if (!estadoActual.equals(estadoAnterior)) {
@@ -45,6 +65,10 @@ public class CollisionManager {
 
     /**
      * Verifica colisiones entre el jugador y los enemigos cuerpo a cuerpo.
+     * Gestiona el daño recibido por el jugador y el daño infligido por ataques normales o especiales.
+     * @param player El jugador controlado por el usuario
+     * @param enemigos Lista de enemigos activos en el escenario
+     * @param gc Controlador del juego para efectos de sonido
      */
     public void verificarColisionesEnemigos(Player player, List<Enemy> enemigos, GameController gc) {
         String estadoActual = player.getEstadoAnimacion();
@@ -90,6 +114,10 @@ public class CollisionManager {
 
     /**
      * Verifica colisiones de proyectiles con el jugador.
+     * Si una bala impacta al jugador, le inflige daño y se elimina de la lista.
+     * @param player El jugador controlado por el usuario
+     * @param proyectiles Lista de proyectiles activos en pantalla
+     * @param gc Controlador del juego para efectos de sonido
      */
     public void verificarColisionesProyectiles(Player player, List<Projectile> proyectiles, GameController gc) {
         Iterator<Projectile> it = proyectiles.iterator();
@@ -107,6 +135,9 @@ public class CollisionManager {
     /**
      * Verifica colisiones del jugador con Arlong.
      * El jugador solo puede golpear a Arlong UNA VEZ por swing de ataque.
+     * @param player El jugador controlado por el usuario
+     * @param arlong Instancia del jefe Arlong
+     * @param gc Controlador del juego para efectos de sonido
      */
     public void verificarColisionArlong(Player player, Arlong arlong, GameController gc) {
         if (arlong == null || !arlong.estaVivo()) return;
@@ -140,7 +171,10 @@ public class CollisionManager {
 
     /**
      * Verifica colisiones del jugador con Crocodile.
-     * Crocodile solo puede ser golpeado acercándose a él.
+     * Crocodile solo puede ser golpeado acercandose a el, y aplica daño global en su ataque.
+     * @param player El jugador controlado por el usuario
+     * @param croc Instancia del jefe Crocodile
+     * @param gc Controlador del juego para efectos de sonido
      */
     public void verificarColisionCrocodile(Player player, Crocodile croc, GameController gc) {
         if (croc == null || !croc.estaVivo()) return;
@@ -178,7 +212,12 @@ public class CollisionManager {
 
     /**
      * Verifica colisiones del jugador con items en el mapa.
+     * Si el jugador intenta recoger un objeto y cumple los requisitos, este aplica su efecto y se elimina.
+     * @param player El jugador controlado por el usuario
+     * @param objetos Lista de objetos o items en el escenario
+     * @param quiereRecoger Flag que indica si el jugador ha presionado la accion de recoger
      */
+
     public void verificarColisionesObjetos(Player player, List<GameObject> objetos,
                                            boolean quiereRecoger) {
         if (!quiereRecoger) return;
@@ -198,6 +237,12 @@ public class CollisionManager {
         }
     }
 
+    /**
+     * Calcula y genera el rectangulo del rango de ataque normal segun el tipo de personaje y su direccion.
+     * @param player El jugador que ataca
+     * @return Rectangulo que representa el area afectada por el ataque normal
+     */
+
     private Rectangle getRangoAtaque(Player player) {
         int alcance = switch (player.getTipo()) {
             case ZORO -> 110;
@@ -211,6 +256,12 @@ public class CollisionManager {
             case IZQUIERDA -> new Rectangle(player.getX() - alcance, player.getY(), alcance, player.getHeight());
         };
     }
+
+    /**
+     * Calcula y genera el rectangulo del rango de ataque especial segun la direccion del personaje.
+     * @param player El jugador que ejecuta el ataque especial
+     * @return Rectangulo que representa la zona mas amplia de daño especial
+     */
 
     private Rectangle getRangoEspecial(Player player) {
         int alcance = 250;
