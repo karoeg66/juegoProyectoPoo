@@ -50,16 +50,21 @@ public class  PantallaVictoria {
                 GamePanel.WIDTH / 2 - 140,
                 GamePanel.HEIGHT / 2 + 120);
 
+        int y = GamePanel.HEIGHT / 2 + 110;
 
-        g.drawString("TOP 3", GamePanel.WIDTH / 2 - 140, GamePanel.HEIGHT / 2 + 110 );
+        g.drawString("TOP 3", GamePanel.WIDTH / 2 - 140, y);
+        y += 35;
 
         for (int i = 0; i < top3.size(); i++) {
-            int y = GamePanel.HEIGHT / 2 + 125;
             String[] partes = top3.get(i).split(";");
+
             g.drawString(
                     (i + 1) + ". " + partes[0] + " - " + partes[1],
-                    GamePanel.WIDTH / 2 - 140, y);
-            y+= 20;
+                    GamePanel.WIDTH / 2 - 110,
+                    y
+            );
+
+            y += 30;
         }
     }
 
