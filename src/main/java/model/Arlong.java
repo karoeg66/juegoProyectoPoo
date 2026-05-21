@@ -201,13 +201,7 @@ public class Arlong extends Boss {
         return enAnimacionAtaque;
     }
 
-    /**
-     * Define el patrón de ataque del jefe.
-     * Actualmente no posee una implementación específica.
-     */
-    @Override
-    public void patronAtaque() {
-    }
+
 
     /**
      * Activa la animación de reacción si ha transcurrido
@@ -220,6 +214,11 @@ public class Arlong extends Boss {
             setEstadoAnimacion("reaccion");
             tiempoUltimaReaccion = ahora;
         }
+    }
+
+    @Override
+    public void patronAtaque() {
+        //No
     }
 
     /**

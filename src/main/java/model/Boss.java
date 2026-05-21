@@ -285,4 +285,8 @@ public abstract class Boss extends Character {
      * @return nombre del boss
      */
     public abstract String getNombre();
+
+    public abstract void animacionIdle();
+
+    public abstract void patronAtaque();
 }
