@@ -7,15 +7,21 @@ import java.awt.*;
 
 
 public abstract class Entity {
-    // Posicion de la entidad
+    /**
+     * Atributos de coordenadas de la entidad
+     */
     protected int x;
     protected int y;
 
-    // Tamaño de la entidad
+    /**
+     * Atributos de tamanio de la entidad
+     */
     protected int width;
     protected int height;
 
-    // Vida de la entidad
+    /**
+     * Atributo de la vida de la entidad
+     */
     protected int vida;
 
     /**
