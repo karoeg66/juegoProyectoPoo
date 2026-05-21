@@ -15,6 +15,13 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Panel principal del juego (JPanel) que actua como el nucleo de la vista.
+ * Implementa Runnable para gestionar el bucle principal del juego (Game Loop) a 60 FPS.
+ * Controla la navegacion entre pantallas, la captura de clicks de raton,
+ * la actualizacion logica y el renderizado de los componentes y escenarios.
+ */
+
 public class GamePanel extends JPanel implements Runnable {
 
     public static final int WIDTH = 1280;
@@ -42,7 +49,11 @@ public class GamePanel extends JPanel implements Runnable {
     private Image fondoNivel2;
 
 
-
+    /**
+     * Constructor del panel de juego.
+     * Define el tamaño preferido, el color de fondo por defecto y activa el enfoque
+     * junto con el doble buffer para evitar parpadeos en el renderizado.
+     */
 
     public GamePanel() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -51,6 +62,11 @@ public class GamePanel extends JPanel implements Runnable {
         setFocusable(true);
         inicializar();
     }
+
+    /**
+     * Inicializa los controladores, las pantallas secundarias, los oyentes de eventos
+     * de teclado/raton, carga los recursos visuales e inicia el bucle del juego.
+     */
 
     private void inicializar() {
         soundManager = new SoundManager();
@@ -127,11 +143,20 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    /**
+     * Crea e inicia el hilo secundario dedicado a ejecutar el bucle principal del juego.
+     */
+
     public void iniciarGameLoop() {
         corriendo = true;
         gameThread = new Thread(this);
         gameThread.start();
     }
+
+    /**
+     * Ciclo de ejecucion principal (Game Loop) utilizando el metodo Delta.
+     * Garantiza actualizaciones de logica y repintado de pantalla constantes a 60 FPS.
+     */
 
     @Override
     public void run() {
@@ -151,6 +176,10 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+
+    /**
+     * Actualiza el estado de la logica del juego dependiendo de la pantalla actual activa.
+     */
 
     public void actualizar() {
         EstadoJuego estado = controller.getEstado();
@@ -180,6 +209,12 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
     }
+
+    /**
+     * Se encarga de dibujar graficamente la interfaz de usuario en pantalla,
+     * delegando el renderizado a la pantalla correspondiente segun el estado del juego.
+     * @param g Objeto Graphics utilizado para pintar los componentes
+     */
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -220,6 +255,13 @@ public class GamePanel extends JPanel implements Runnable {
         g.dispose();
     }
 
+    /**
+     * Dibuja la imagen de fondo correspondiente al nivel activo. Si la imagen falla,
+     * genera un fondo de color solido alternativo.
+     * @param g Objeto Graphics para dibujar
+     * @param estado Estado del juego para determinar el nivel
+     */
+
     private void dibujarFondo(Graphics g, EstadoJuego estado) {
         Image fondo = (estado == EstadoJuego.NIVEL1) ? fondoNivel1 : fondoNivel2;
         if (fondo != null) {
@@ -230,6 +272,11 @@ public class GamePanel extends JPanel implements Runnable {
             g.fillRect(0, 0, WIDTH, HEIGHT);
         }
     }
+
+    /**
+     * Dibuja una capa semitransparente oscura sobre el juego junto con el texto de pausa.
+     * @param g Objeto Graphics para dibujar
+     */
 
     private void dibujarPausa(Graphics g) {
         g.setColor(new Color(0, 0, 0, 150));
@@ -245,6 +292,11 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString(sub, (WIDTH - fm.stringWidth(sub)) / 2, HEIGHT / 2 + 40);
     }
 
+    /**
+     * Muestra el temporizador de la partida en formato MM:SS en la esquina superior derecha.
+     * @param g Objeto Graphics para dibujar
+     */
+
     private void dibujarTiempo(Graphics g) {
         long ms = controller.getTiempoTranscurrido();
         long seg = (ms / 1000) % 60;
@@ -254,12 +306,23 @@ public class GamePanel extends JPanel implements Runnable {
         g.drawString(String.format("%02d:%02d", min, seg), WIDTH - 70, 20);
     }
 
-    // ── Métodos de navegación ─────────────────────────────────────────────────
+
+    /**
+     * Asigna el personaje seleccionado en el controlador y activa la entrada de texto para el nombre.
+     * @param tipo El tipo de personaje seleccionado (Luffy, Zoro, Sanji)
+     */
+
 
     public void seleccionarPersonaje(TipoPersonaje tipo) {
         controller.seleccionarPersonaje(tipo);
         inputController.iniciarCapturaNombre();
     }
+
+    /**
+     * Inicia de forma asincrona la pantalla de carga e inicializa el nivel indicado.
+     * @param tipo Personaje seleccionado
+     * @param nivel Numero de nivel a cargar (1 o 2)
+     */
 
     public void iniciarJuego(TipoPersonaje tipo, int nivel) {
         pantallaCarga = new PantallaCarga(() -> controller.iniciarJuegoEnNivel(tipo, nivel));
@@ -267,18 +330,36 @@ public class GamePanel extends JPanel implements Runnable {
         controller.cambiarEstado(EstadoJuego.CARGANDO);
     }
 
+    /**
+     * Cambia el estado del juego para desplegar las instrucciones y solicita el foco del teclado.
+     */
+
     public void mostrarInstrucciones() {
         controller.cambiarEstado(EstadoJuego.INSTRUCCIONES);
         requestFocusInWindow();
     }
 
+    /**
+     * Regresa al estado del menu de inicio principal del juego.
+     */
+
     public void volverAlMenu() {
         controller.cambiarEstado(EstadoJuego.MENU);
     }
 
+    /**
+     * Obtiene el controlador de logica central del juego.
+     * @return Instancia actual de GameController
+     */
+
     public GameController getController() {
         return controller;
     }
+
+    /**
+     * Valida el nombre ingresado por el usuario, detiene la captura por teclado
+     * y avanza a la pantalla de seleccion de nivel.
+     */
 
     private void confirmarNombre() {
         String nombre = inputController.getTextoNombre().trim();
