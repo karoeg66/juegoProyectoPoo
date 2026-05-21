@@ -5,23 +5,55 @@ import model.Player;
 
 import java.awt.*;
 
+
+/**
+ * Clase encargada de renderizar la Interfaz de Usuario (HUD) durante la partida.
+ * Se ocupa de dibujar componentes visuales en la pantalla como la barra de vida
+ * dinámica del jugador, los indicadores de inventario (habilidades especiales)
+ * y la puntuación actual acumulada.
+ */
+
+
 public class HUD {
 
     private Player player;
     private Boss jefe;
+
+    /**
+     * Constructor del HUD.
+     * @param player El jugador del cual se obtendra la vida y el inventario
+     * @param jefe El jefe del nivel para controlar sus barras de estado
+     */
 
     public HUD(Player player, Boss jefe) {
         this.player = player;
         this.jefe = jefe;
     }
 
+    /**
+     * Actualiza la referencia del jugador.
+     * @param player Nueva instancia o estado del jugador
+     */
+
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    /**
+     * Actualiza la referencia del jefe de nivel.
+     * @param jefe Nueva instancia o estado del jefe
+     */
+
     public void setJefe(Boss jefe) {
         this.jefe = jefe;
     }
+
+    /**
+     * Dibuja la barra de vida del jugador en la esquina superior izquierda.
+     * Cambia de color (Verde, Amarillo, Rojo) dinamicamente segun el porcentaje
+     * de salud restante y muestra el texto con los puntos de vida exactos.
+     * @param g Objeto Graphics para renderizar en pantalla
+     */
 
     public void dibujarBarraVidaPlayer(Graphics g) {
         if (player == null) return;
@@ -53,11 +85,24 @@ public class HUD {
         g.drawString(player.getTipo().name(), barX, barY - 4);
     }
 
+    /**
+     * Espacio reservado para la gestion visual de la barra del jefe de nivel.
+     * Nota: Actualmente los jefes manejan su propio renderizado en su metodo draw.
+     * @param g Objeto Graphics para renderizar en pantalla
+     */
+
     public void dibujarBossBar(Graphics g) {
         if (jefe == null || !jefe.estaVivo()) return;
         // La barra del boss se dibuja en el propio Boss.draw()
         // Aquí se puede poner el nombre encima si se desea
     }
+
+    /**
+     * Dibuja los espacios de inventario o habilidades en la pantalla.
+     * Muestra un recuadro luminoso si el ataque especial esta cargado/disponible,
+     * junto con el indicador de la tecla correspondiente.
+     * @param g Objeto Graphics para renderizar en pantalla
+     */
 
     public void mostrarInventario(Graphics g) {
         if (player == null) return;
@@ -73,6 +118,13 @@ public class HUD {
         g.drawString("ESP", iconX + 3, iconY + 20);
         g.drawString("[K]", iconX + 3, iconY + 42);
     }
+
+    /**
+     * Renderiza el puntaje acumulado por el jugador en la esquina superior derecha.
+     * @param g Objeto Graphics para renderizar en pantalla
+     * @param puntaje Puntuacion numerica actual del juego
+     */
+
 
     public void mostrarPuntaje(Graphics g, int puntaje) {
 
