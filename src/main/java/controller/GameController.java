@@ -159,6 +159,9 @@ public class GameController {
      */
     private boolean jefeEnMuerte = false;
 
+    /**
+     * Atributo del nombre del jugador
+     */
     private String nombreJugador = "";
 
     /**
