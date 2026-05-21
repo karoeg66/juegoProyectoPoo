@@ -232,10 +232,10 @@ public class Crocodile extends Boss {
      */
     public int getDanoAtaqueGlobal() {
         return switch (fase) {
-            case 1 -> 10;
-            case 2 -> 16;
-            case 3 -> 22;
-            default -> 10;
+            case 1 -> 5;
+            case 2 -> 8;
+            case 3 -> 11;
+            default -> 5;
         };
     }
 
