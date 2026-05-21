@@ -43,7 +43,7 @@ public abstract class Boss extends Character {
      * @param width     Atributo variable del ancho de la entidad
      * @param height    Atributo variable del alto de la entidad
      * @param live      Atributo variable de la vida de la entidad
-     * @param velocidad
+     * @param velocidad Atributo variable de la velocidad de la entidad
      */
     public Boss(int x, int y, int width, int height, int live, int velocidad) {
         super(x, y, width, height, live, velocidad);
