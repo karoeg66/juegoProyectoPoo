@@ -214,7 +214,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             case PAUSA -> dibujarPausa(g);
             case VICTORIA -> pantallaVictoria.mostrarVictoria(g, controller.getPuntaje(), inputController.getTextoNombre(),Historial.obtenerTop3());
-            case DERROTA -> pantallaDerrota.mostrarDerrota(g, controller.getTiempoTranscurrido());
+            case DERROTA -> pantallaDerrota.mostrarDerrota(g, controller.getTiempoTranscurrido(), controller.getPuntaje());
         }
 
         g.dispose();

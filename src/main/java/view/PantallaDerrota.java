@@ -27,7 +27,7 @@ public class PantallaDerrota {
      * @param tiempoJugado tiempo total jugado
      */
     public void mostrarDerrota(Graphics g,
-                               long tiempoJugado) {
+                               long tiempoJugado, int puntaje) {
 
         if (tiempoBloqueo == 0) {
             tiempoBloqueo = System.currentTimeMillis();
@@ -64,6 +64,11 @@ public class PantallaDerrota {
                 GamePanel.HEIGHT / 2 + 20
         );
 
+        g.drawString("Puntaje: " + puntaje,
+                GamePanel.WIDTH / 2 - 60,
+                GamePanel.HEIGHT / 2 + 50
+        );
+
         long restante =
                 10 - (System.currentTimeMillis()
                         - tiempoBloqueo) / 1000;
@@ -75,7 +80,7 @@ public class PantallaDerrota {
                         + Math.max(0, restante)
                         + "s",
                 GamePanel.WIDTH / 2 - 90,
-                GamePanel.HEIGHT / 2 + 60
+                GamePanel.HEIGHT / 2 + 90
         );
     }
 

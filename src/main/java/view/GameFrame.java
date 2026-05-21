@@ -11,7 +11,7 @@ public class GameFrame extends JFrame {
     }
 
     public void iniciarVentana() {
-        setTitle("One Piece - El Juego");
+        setTitle("One Piece - Enemies in sight");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
