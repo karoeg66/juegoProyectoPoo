@@ -14,7 +14,7 @@ public class Arlong extends Boss {
     /**
      * Vida máxima del jefe.
      */
-    private static final int VIDA_MAX = 500;
+    private static final int VIDA_MAX = 10;
 
     /**
      * Tiempo mínimo entre ataques consecutivos en milisegundos.

@@ -1,6 +1,7 @@
 package view;
 
 import controller.GameController;
+import controller.Historial;
 import controller.InputController;
 import controller.SoundManager;
 import model.enums.EstadoJuego;
@@ -39,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Image fondoNivel1;
     private Image fondoNivel2;
+
 
 
 
@@ -211,7 +213,7 @@ public class GamePanel extends JPanel implements Runnable {
                 dibujarTiempo(g);
             }
             case PAUSA -> dibujarPausa(g);
-            case VICTORIA -> pantallaVictoria.mostrarVictoria(g, controller.getPuntaje(), inputController.getTextoNombre());
+            case VICTORIA -> pantallaVictoria.mostrarVictoria(g, controller.getPuntaje(), inputController.getTextoNombre(),Historial.obtenerTop3());
             case DERROTA -> pantallaDerrota.mostrarDerrota(g, controller.getTiempoTranscurrido());
         }
 
