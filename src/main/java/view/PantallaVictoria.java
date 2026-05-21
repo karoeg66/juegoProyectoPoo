@@ -48,12 +48,12 @@ public class  PantallaVictoria {
 
         g.drawString("Haz clic para volver al menu",
                 GamePanel.WIDTH / 2 - 140,
-                GamePanel.HEIGHT / 2 + 120);
+                GamePanel.HEIGHT / 2 + 240);
 
-        int y = GamePanel.HEIGHT / 2 + 110;
+        int y = GamePanel.HEIGHT / 2 + 130;
 
         g.drawString("TOP 3", GamePanel.WIDTH / 2 - 140, y);
-        y += 35;
+        y += 30;
 
         for (int i = 0; i < top3.size(); i++) {
             String[] partes = top3.get(i).split(";");
